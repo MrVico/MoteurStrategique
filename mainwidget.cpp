@@ -189,7 +189,7 @@ void MainWidget::initShaders()
 void MainWidget::initTextures()
 {
     // Load grass.png image
-    grassTexture = new QOpenGLTexture(QImage("../HMIN317-Projet/grass.png"));
+    grassTexture = new QOpenGLTexture(QImage("../MoteurStrategique/grass.png"));
     // Set nearest filtering mode for texture minification
     grassTexture->setMinificationFilter(QOpenGLTexture::Nearest);
     // Set bilinear filtering mode for texture magnification
@@ -200,7 +200,7 @@ void MainWidget::initTextures()
 
 
     // Load megaman.png image
-    megamanTexture = new QOpenGLTexture(QImage("../HMIN317-Projet/megaman.png"));
+    megamanTexture = new QOpenGLTexture(QImage("../MoteurStrategique/megaman.png"));
     // Set nearest filtering mode for texture minification
     megamanTexture->setMinificationFilter(QOpenGLTexture::Nearest);
     // Set bilinear filtering mode for texture magnification

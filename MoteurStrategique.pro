@@ -24,16 +24,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 CONFIG += c++11
 
+HEADERS += \
+        mainwidget.h \
+        megaman.h \
+        terrain.h \
+        soldier.h \
+        minion.h \
+        scavenger.h
+
 SOURCES += \
         main.cpp \
         mainwidget.cpp \
         megaman.cpp \
-        terrain.cpp
-
-HEADERS += \
-        mainwidget.h \
-        megaman.h \
-        terrain.h
+        terrain.cpp \
+        soldier.cpp \
+        minion.cpp \
+        scavenger.cpp
 
 RESOURCES += \
     shaders.qrc
