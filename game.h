@@ -16,14 +16,12 @@ public:
     Game(QWidget* parent=NULL);
 
     void displayMainMenu();
-    void setCursor(QString filename);
     void mouseMoveEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
 
     QGraphicsScene* scene;
     Gold* gold;
-    QGraphicsPixmapItem* cursor;
-    Mine* build;
+    Mine* mine;
 
 public slots:
     void displayGame();

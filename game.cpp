@@ -14,12 +14,13 @@ Game::Game(QWidget *parent)
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     // Resize the game window
-    setFixedSize(1768, 992);
+    //setFixedSize(1768, 992);
+    setFixedSize(1080, 720);
     scene = new QGraphicsScene();
-    scene->setSceneRect(0, 0, 1768, 992);
+    //scene->setSceneRect(0, 0, 1768, 992);
+    scene->setSceneRect(0, 0, 1080, 720);
     setScene(scene);
-    cursor = nullptr;
-    build = nullptr;
+    mine = nullptr;
     setMouseTracking(true);
 }
 
@@ -51,40 +52,31 @@ void Game::displayMainMenu()
     scene->addItem(quitButton);
 }
 
-void Game::setCursor(QString filename)
-{
-    // If the cursor is already set (not nullptr) we delete it
-    if(cursor){
-        scene->removeItem(cursor);
-        delete cursor;
-    }
-
-    cursor = new QGraphicsPixmapItem();
-    cursor->setPixmap(QPixmap(filename));
-    scene->addItem(cursor);
-}
-
 void Game::mouseMoveEvent(QMouseEvent *event)
 {
-    if(cursor){
-        cursor->setPos(event->pos());
+    if(mine){
+        mine->setPos(event->pos().x() - mine->boundingRect().width()/2, event->pos().y() - mine->boundingRect().height()/2);
+        mine->checkForCollisions();
+    }
+    else{
+        QGraphicsView::mouseMoveEvent(event);
     }
 }
 
 void Game::mousePressEvent(QMouseEvent *event)
 {
-    if(build){
-        scene->addItem(build);
-        build->setPos(event->pos());
-        build->startMiningGold();
-        cursor = nullptr;
-        build = nullptr;
+    // If we left click with a mine and there aren't any collisions we build it
+    if(event->button() == Qt::LeftButton && mine && !mine->checkForCollisions()){
+        mine->startMiningGold();
+        mine = nullptr;
     }
+    // If we right click with a mine we remove it, cancel
+    else if(event->button() == Qt::RightButton && mine){
+        scene->removeItem(mine);
+        mine = nullptr;
+    }
+    // Else we delegate to the parent
     else{
-        /*
-         * We pass the event to the parent
-         * so it can be called on any other object
-         * */
         QGraphicsView::mousePressEvent(event);
     }
 }

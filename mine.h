@@ -13,6 +13,7 @@ class Mine: public QObject, public QGraphicsPixmapItem
 public:
     Mine(QGraphicsItem * parent=0);
     void startMiningGold();
+    bool checkForCollisions();
 
 protected:
     void timerEvent(QTimerEvent *e) override;

@@ -10,8 +10,8 @@ BuildMineIcon::BuildMineIcon(QGraphicsItem *parent): QGraphicsPixmapItem(parent)
 }
 
 void BuildMineIcon::mousePressEvent(QGraphicsSceneMouseEvent *event){
-    if (!game->build){
-        game->build = new Mine();
-        game->setCursor(QString(":/images/mining.png"));
+    if (!game->mine){
+        game->mine = new Mine();
+        game->scene->addItem(game->mine);
     }
 }
