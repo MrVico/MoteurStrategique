@@ -25,28 +25,35 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 HEADERS += \
-        mainwidget.h \
-        megaman.h \
-        terrain.h \
-        soldier.h \
-        minion.h \
-        scavenger.h \
+    mainwidget.h \
+    megaman.h \
+    terrain.h \
+    soldier.h \
+    minion.h \
+    scavenger.h \
     button.h \
-    game.h
+    game.h \
+    buildmineicon.h \
+    mine.h \
+    gold.h
 
 SOURCES += \
-        main.cpp \
-        mainwidget.cpp \
-        megaman.cpp \
-        terrain.cpp \
-        soldier.cpp \
-        minion.cpp \
-        scavenger.cpp \
+    main.cpp \
+    mainwidget.cpp \
+    megaman.cpp \
+    terrain.cpp \
+    soldier.cpp \
+    minion.cpp \
+    scavenger.cpp \
     button.cpp \
-    game.cpp
+    game.cpp \
+    buildmineicon.cpp \
+    mine.cpp \
+    gold.cpp
 
 RESOURCES += \
-    shaders.qrc
+    shaders.qrc \
+    res.qrc
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

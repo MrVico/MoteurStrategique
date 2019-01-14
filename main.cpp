@@ -3,9 +3,12 @@
 #include <QSurfaceFormat>
 
 #ifndef QT_NO_OPENGL
-#include "mainwidget.h"
-#include "game.h"
+#include "Mainwidget.h"
+#include "Game.h"
 #endif
+
+// External variable
+Game* game;
 
 int main(int argc, char *argv[])
 {
@@ -26,7 +29,7 @@ int main(int argc, char *argv[])
     widget.show();
     */
 
-    Game* game = new Game();
+    game = new Game();
     game->show();
     game->displayMainMenu();
 

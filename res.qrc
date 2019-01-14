@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/images/">
+        <file>mining.png</file>
+        <file>m.png</file>
+        <file>goldIngots.png</file>
+    </qresource>
+</RCC>
