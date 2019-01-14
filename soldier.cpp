@@ -1,14 +1,38 @@
-#include "soldier.h"
+#include "Soldier.h"
+#include "Game.h"
+#include "CustomSprite.h"
 
-void Soldier::attack(Minion &target) {
-    printf("tiens bouffe !\n");
-    target.recieveDamage(this->m_strength);
+#include <QPixmap>
+#include <QDebug>
+#include <QTimer>
+#include <QList>
+
+extern Game* game;
+
+Soldier::Soldier(QGraphicsItem *parent):QObject(), CustomSprite(parent){
+    // Set the graphic
+    setPixmap(QPixmap(":/images/soldierSprite.png"));
 }
 
-int Soldier::getArmor() {
-    return this->m_armor;
+// Start mining
+void Soldier::start()
+{
+    QBasicTimer* timer = new QBasicTimer();
+    timer->start(1000, this);
 }
 
-int Soldier::getStrength() {
-    return this->m_strength;
+bool Soldier::checkForCollisions()
+{
+    QList<QGraphicsItem*> colliders = collidingItems();
+    if(colliders.size()>0){
+        //setPixmap(QPixmap(":/images/miningDisabled.png"));
+        return true;
+    }
+    //setPixmap(QPixmap(":/images/mining.png"));
+    return false;
+}
+
+void Soldier::timerEvent(QTimerEvent *e)
+{
+
 }

@@ -2,7 +2,8 @@
 #define GAME_H
 
 #include "Mine.h"
-#include "Gold.h"
+#include "Wallet.h"
+#include "CustomSprite.h"
 
 #include <QGraphicsView>
 #include <QGraphicsScene>
@@ -20,8 +21,9 @@ public:
     void mousePressEvent(QMouseEvent *event);
 
     QGraphicsScene* scene;
-    Gold* gold;
-    Mine* mine;
+    Wallet* wallet;
+    CustomSprite* sprite;
+    int soldierPrice = 50;
 
 public slots:
     void displayGame();

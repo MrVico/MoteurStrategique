@@ -4,5 +4,7 @@
         <file>miningDisabled.png</file>
         <file>m.png</file>
         <file>goldIngots.png</file>
+        <file>soldierIcon.png</file>
+        <file>soldierSprite.png</file>
     </qresource>
 </RCC>

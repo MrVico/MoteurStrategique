@@ -1,17 +1,24 @@
 #include "BuildMineIcon.h"
 #include "Game.h"
 
+#include <QDebug>
+
 // Reference to the game instance
 extern Game *game;
 
-BuildMineIcon::BuildMineIcon(QGraphicsItem *parent): QGraphicsPixmapItem(parent){
+BuildMineIcon::BuildMineIcon(QGraphicsItem *parent): QGraphicsPixmapItem(parent)
+{
     setPixmap(QPixmap(":/images/m.png"));
-    setPos(5, 5);
+    offset = 5;
+    setPos(offset, offset);
 }
 
-void BuildMineIcon::mousePressEvent(QGraphicsSceneMouseEvent *event){
-    if (!game->mine){
-        game->mine = new Mine();
-        game->scene->addItem(game->mine);
+void BuildMineIcon::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    qDebug() << "MINE PRESSED " << event->pos();
+    if (!game->sprite){
+        game->sprite = new Mine();
+        game->sprite->setPos(event->pos().x() - game->sprite->boundingRect().width()/2, event->pos().y() - game->sprite->boundingRect().height()/2);
+        game->scene->addItem(game->sprite);
     }
 }

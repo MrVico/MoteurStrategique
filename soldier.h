@@ -1,22 +1,24 @@
 #ifndef SOLDIER_H
 #define SOLDIER_H
 
-#include "minion.h"
+#include "CustomSprite.h"
 
-class Soldier : public Minion
+#include <QGraphicsPixmapItem>
+#include <QGraphicsItem>
+#include <QObject>
+#include <QBasicTimer>
+#include <QTimerEvent>
+
+class Soldier: public QObject, public CustomSprite
 {
+    Q_OBJECT
 public:
-    Soldier() : Minion() {this->setHealth(120);}
-    //SoldierAt(QVector2D position);
+    Soldier(QGraphicsItem * parent=0);
+    void start();
+    bool checkForCollisions();
 
-    void attack(Minion &target);
-
-    int getArmor();
-    int getStrength();
-
-private:
-    int m_armor;
-    int m_strength = 10;
+protected:
+    void timerEvent(QTimerEvent *e) override;
 };
 
 #endif // SOLDIER_H

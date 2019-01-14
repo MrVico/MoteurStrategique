@@ -1,5 +1,6 @@
 #include "Mine.h"
 #include "Game.h"
+#include "CustomSprite.h"
 
 #include <QPixmap>
 #include <QDebug>
@@ -8,12 +9,13 @@
 
 extern Game* game;
 
-Mine::Mine(QGraphicsItem *parent):QObject(), QGraphicsPixmapItem(parent){
+Mine::Mine(QGraphicsItem *parent):QObject(), CustomSprite(parent){
     // Set the graphic
     setPixmap(QPixmap(":/images/mining.png"));
 }
 
-void Mine::startMiningGold()
+// Start mining
+void Mine::start()
 {
     QBasicTimer* timer = new QBasicTimer();
     timer->start(1000, this);
@@ -33,5 +35,5 @@ bool Mine::checkForCollisions()
 void Mine::timerEvent(QTimerEvent *e)
 {
     // Mine gold
-    game->gold->increase();
+    game->wallet->add(1);
 }

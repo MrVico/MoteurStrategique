@@ -35,7 +35,9 @@ HEADERS += \
     game.h \
     buildmineicon.h \
     mine.h \
-    gold.h
+    spawnsoldierbutton.h \
+    customsprite.h \
+    wallet.h
 
 SOURCES += \
     main.cpp \
@@ -49,7 +51,9 @@ SOURCES += \
     game.cpp \
     buildmineicon.cpp \
     mine.cpp \
-    gold.cpp
+    spawnsoldierbutton.cpp \
+    customsprite.cpp \
+    wallet.cpp
 
 RESOURCES += \
     shaders.qrc \
