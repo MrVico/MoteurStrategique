@@ -4,6 +4,7 @@
 
 #ifndef QT_NO_OPENGL
 #include "mainwidget.h"
+#include "game.h"
 #endif
 
 int main(int argc, char *argv[])
@@ -18,11 +19,16 @@ int main(int argc, char *argv[])
     app.setApplicationVersion("0.1");
 #ifndef QT_NO_OPENGL
 
+    /*
     MainWidget widget;
     widget.setFixedWidth(1080);
     widget.setFixedHeight(720);
     widget.show();
+    */
 
+    Game* game = new Game();
+    game->show();
+    game->displayMainMenu();
 
 #else
     QLabel note("OpenGL Support required");

@@ -30,7 +30,9 @@ HEADERS += \
         terrain.h \
         soldier.h \
         minion.h \
-        scavenger.h
+        scavenger.h \
+    button.h \
+    game.h
 
 SOURCES += \
         main.cpp \
@@ -39,7 +41,9 @@ SOURCES += \
         terrain.cpp \
         soldier.cpp \
         minion.cpp \
-        scavenger.cpp
+        scavenger.cpp \
+    button.cpp \
+    game.cpp
 
 RESOURCES += \
     shaders.qrc
