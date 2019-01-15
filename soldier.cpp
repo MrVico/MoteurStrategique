@@ -21,6 +21,7 @@ Soldier::Soldier(QString team, QGraphicsItem *parent):QObject(), CustomSprite(te
 // Start mining
 void Soldier::start()
 {
+    placed = true;
     updateUI();
     time = reloadTime;
     QBasicTimer* timer = new QBasicTimer();
@@ -60,21 +61,40 @@ CustomSprite* Soldier::checkFOV()
     return nullptr;
 }
 
+bool Soldier::isCollidingWithSoldier()
+{
+    QList<QGraphicsItem*> colliders = collidingItems();
+    if(colliders.size() > 1){
+        for(int i=0; i<colliders.size(); i++){
+            if(typeid(*(colliders[i])) == typeid(Soldier)){
+                Soldier* soldier = dynamic_cast<Soldier*>(colliders[i]);
+                if(soldier->placed){
+                    QVector2D direction = QVector2D(soldier->pos().x()-this->pos().x(), soldier->pos().y()-this->pos().y());
+                    direction.normalize();
+                    this->setPos(this->pos().x()-direction.x()*speed, this->pos().y()-direction.y()*speed);
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
 void Soldier::timerEvent(QTimerEvent *e)
 {
     time++;
     CustomSprite* target = checkFOV();
+    // Shoot
     if(target && time > reloadTime){
         Bullet* bullet = new Bullet(this->team, QPoint(this->pos().x()+this->boundingRect().width()/2, this->pos().y()+this->boundingRect().height()/2), target);
         time = 0;
     }
-    else{
-        int currentX = this->pos().x();
-        int currentY = this->pos().y();
-        QVector2D distToTarget = QVector2D(destination.x()-currentX, destination.y()-currentY);
-        if (distToTarget.length() > 5) {
+    // Move
+    else if(!isCollidingWithSoldier()){
+        QVector2D distToTarget = QVector2D(destination.x()-this->pos().x(), destination.y()-this->pos().y());
+        if (distToTarget.length() > game->spriteSize) {
             distToTarget.normalize();
-            this->setPos(currentX + distToTarget.x()*speed, currentY + distToTarget.y()*speed);
+            this->setPos(this->pos().x() + distToTarget.x()*speed, this->pos().y() + distToTarget.y()*speed);
         }
         updateUI();
     }

@@ -24,6 +24,7 @@ protected:
 private:
     void stop();
     CustomSprite* checkFOV();
+    bool isCollidingWithSoldier();
 
     int viewRange;
     QPoint destination;

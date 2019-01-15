@@ -14,6 +14,8 @@ public:
     void updateUI();
     bool isInOurTeam(QString team);
 
+    bool placed = false;
+
 protected:
     QString team;
 
