@@ -9,14 +9,14 @@ extern Game *game;
 BuildMineIcon::BuildMineIcon(QGraphicsItem *parent): QObject(), QGraphicsPixmapItem(parent)
 {
     setPixmap(QPixmap(":/images/mineIcon.png"));
-    setPos(10, 5);
+    setPos(game->spriteSize*2, 5);
 }
 
 void BuildMineIcon::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if (!game->sprite){
-        game->sprite = new Mine(QString("red"));
-        game->sprite->setPos(event->pos().x() - game->sprite->boundingRect().width()/2, event->pos().y() - game->sprite->boundingRect().height()/2);
+        game->sprite = new Mine("red");
+        game->sprite->setPos(event->pos().x() + game->spriteSize*2  - game->spriteSize/2, event->pos().y() - game->sprite->boundingRect().height()/2);
         game->scene->addItem(game->sprite);
     }
 }

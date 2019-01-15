@@ -71,44 +71,53 @@ void Game::displayGame()
     SpawnSoldierButton* soldierIcon = new SpawnSoldierButton();
     scene->addItem(soldierIcon);
 
-    // Wallet
-    wallet = new Wallet();
-    scene->addItem(wallet);
+    // Wallets
+    redWallet = new Wallet("red");
+    scene->addItem(redWallet);
+    blueWallet = new Wallet("blue");
+    scene->addItem(blueWallet);
 
     // Spawn mine spots
     spawnGoldMineSpots();
 
     // Spawn the two citadels
-    Citadel* redCitadel = new Citadel(QPoint(5, this->height()/2-spriteSize*2), QString("red"));
+    Citadel* redCitadel = new Citadel(QPoint(5, this->height()/2-spriteSize*2), "red");
     scene->addItem(redCitadel);
-    Citadel* blueCitadel = new Citadel(QPoint(this->width()-spriteSize*2-5, this->height()/2-spriteSize*2), QString("blue"));
+    Citadel* blueCitadel = new Citadel(QPoint(this->width()-spriteSize*2-5, this->height()/2-spriteSize*2), "blue");
     scene->addItem(blueCitadel);
 }
 
 void Game::spawnGoldMineSpots()
 {
-    createMineSpot(QPoint(200, 100));
-    createMineSpot(QPoint(300, 200));
-    createMineSpot(QPoint(200, 400));
-    createMineSpot(QPoint(400, 480));
-    createMineSpot(QPoint(150, 600));
+    Mine* redMine = new Mine("red", true);
+    redMine->setPos(QPoint(200, 100));
+    redMine->updateUI();
+    scene->addItem(redMine);
+    redMine->start();
 
-    Mine* mine = new Mine(QString("blue"));
-    mine->setPos(QPoint(this->width()-spriteSize-200, this->height()-spriteSize-100));
-    mine->updateUI();
-    scene->addItem(mine->hpText);
-    scene->addItem(mine);
-    //createMineSpot(QPoint(this->width()-spriteSize-200, this->height()-spriteSize-100));
-    createMineSpot(QPoint(this->width()-spriteSize-300, this->height()-spriteSize-200));
-    createMineSpot(QPoint(this->width()-spriteSize-200, this->height()-spriteSize-400));
-    createMineSpot(QPoint(this->width()-spriteSize-400, this->height()-spriteSize-480));
-    createMineSpot(QPoint(this->width()-spriteSize-150, this->height()-spriteSize-600));
+    //new MineSpot(QPoint(200, 100));
+    new MineSpot(QPoint(300, 200));
+    new MineSpot(QPoint(200, 400));
+    new MineSpot(QPoint(400, 480));
+    new MineSpot(QPoint(150, 600));
+
+    Mine* blueMine = new Mine("blue", true);
+    blueMine->setPos(QPoint(this->width()-spriteSize-200, this->height()-spriteSize-100));
+    blueMine->updateUI();
+    scene->addItem(blueMine);
+    blueMine->start();
+
+    new MineSpot(QPoint(this->width()-spriteSize-300, this->height()-spriteSize-200));
+    new MineSpot(QPoint(this->width()-spriteSize-200, this->height()-spriteSize-400));
+    new MineSpot(QPoint(this->width()-spriteSize-400, this->height()-spriteSize-480));
+    new MineSpot(QPoint(this->width()-spriteSize-150, this->height()-spriteSize-600));
 }
 
-void Game::createMineSpot(QPoint pos)
+Wallet *Game::getMyWallet(string team)
 {
-    MineSpot* spot = new MineSpot(pos);
-    scene->addItem(spot);
+    if(team == "red")
+        return redWallet;
+    return blueWallet;
 }
 
 void Game::mouseMoveEvent(QMouseEvent *event)
@@ -133,7 +142,7 @@ void Game::mousePressEvent(QMouseEvent *event)
     else if(event->button() == Qt::RightButton && sprite){
         // We get our money back since we didn't place the item
         if(typeid(*(sprite)) == typeid(Soldier))
-            wallet->add(soldierPrice);
+            redWallet->add(soldierPrice);
         scene->removeItem(sprite);
         sprite = nullptr;
     }

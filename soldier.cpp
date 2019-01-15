@@ -11,12 +11,12 @@
 
 extern Game* game;
 
-Soldier::Soldier(QString team, QGraphicsItem *parent): QObject(), CustomSprite(team, parent){
+Soldier::Soldier(string team, QGraphicsItem *parent): QObject(), CustomSprite(team, parent){
     // Set the graphic
     setPixmap(QPixmap(":/images/redSoldierLow.png"));
     viewRange = 200;
     speed = 2;
-    reloadTime = 300;
+    reloadTime = 100;
 }
 
 // Start mining

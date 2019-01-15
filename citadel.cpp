@@ -3,11 +3,11 @@
 
 extern Game* game;
 
-Citadel::Citadel(QPoint pos, QString team, QGraphicsItem *parent): CustomSprite(team, parent)
+Citadel::Citadel(QPoint pos, string team, QGraphicsItem *parent): CustomSprite(team, parent)
 {
-    if(team == QString("red"))
+    if(team == "red")
         setPixmap(QPixmap(":/images/redCitadel.png"));
-    else if(team == QString("blue"))
+    else
         setPixmap(QPixmap(":/images/blueCitadel.png"));
     setPos(pos);
     healthPoints = 100;

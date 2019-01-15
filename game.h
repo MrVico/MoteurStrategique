@@ -19,10 +19,9 @@ public:
     void displayMainMenu();
     void mouseMoveEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
-    void createMineSpot(QPoint pos);
+    Wallet* getMyWallet(string team);
 
     QGraphicsScene* scene;
-    Wallet* wallet;
     CustomSprite* sprite;
     int soldierPrice = 50;
     int spriteSize;
@@ -32,6 +31,8 @@ public slots:
 
 private:
     void spawnGoldMineSpots();
+    Wallet* redWallet;
+    Wallet* blueWallet;
 
 };
 

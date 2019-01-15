@@ -13,7 +13,7 @@ class Soldier: public QObject, public CustomSprite
 {
     Q_OBJECT
 public:
-    Soldier(QString team, QGraphicsItem * parent=0);
+    Soldier(string team, QGraphicsItem * parent=0);
     void start();
     bool canBePlaced();
     void destroyed();

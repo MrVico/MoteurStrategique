@@ -6,7 +6,7 @@
 
 extern Game* game;
 
-Bullet::Bullet(QString team, QPoint pos, CustomSprite* target, QGraphicsItem *parent):QObject(), QGraphicsPixmapItem(parent)
+Bullet::Bullet(string team, QPoint pos, CustomSprite* target, QGraphicsItem *parent):QObject(), QGraphicsPixmapItem(parent)
 {
     setPixmap(QPixmap(":/images/bullet.png"));
     setPos(pos);
@@ -22,7 +22,6 @@ Bullet::Bullet(QString team, QPoint pos, CustomSprite* target, QGraphicsItem *pa
 
 void Bullet::timerEvent(QTimerEvent *e)
 {
-    //qDebug() << "destination: " << target->pos();
     QList<QGraphicsItem*> colliders = collidingItems();
     if(colliders.size() > 0){
         for(int i=0; i<colliders.size(); i++){

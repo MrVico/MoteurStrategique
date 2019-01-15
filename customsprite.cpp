@@ -3,7 +3,7 @@
 
 extern Game* game;
 
-CustomSprite::CustomSprite(QString team, QGraphicsItem *parent): QGraphicsPixmapItem(parent)
+CustomSprite::CustomSprite(string team, QGraphicsItem *parent): QGraphicsPixmapItem(parent)
 {
     this->team = team;
 
@@ -22,7 +22,7 @@ void CustomSprite::takeHit()
     updateUI();
 }
 
-bool CustomSprite::isInOurTeam(QString team)
+bool CustomSprite::isInOurTeam(string team)
 {
     return this->team == team;
 }

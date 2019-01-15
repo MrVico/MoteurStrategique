@@ -5,19 +5,26 @@
 
 extern Game* game;
 
-Wallet::Wallet(QGraphicsItem *parent): QGraphicsTextItem(parent)
+Wallet::Wallet(string side, QGraphicsItem *parent): QGraphicsTextItem(parent)
 {
-    gold = 50;
+    this->gold = 50;
+    this->side = side;
+
+    setFont(QFont("times", 14));
 
     // Draw the icon
     icon = new QGraphicsPixmapItem();
     icon->setPixmap(QPixmap(":/images/goldIngots.png"));
-    icon->setPos(game->width() - icon->boundingRect().width() - 5, 0);
+    if(side == "red"){
+        setDefaultTextColor(Qt::red);
+        icon->setPos(5, 0);
+    }
+    else if(side == "blue"){
+        setDefaultTextColor(Qt::blue);
+        icon->setPos(game->width() - icon->boundingRect().width() - 5, 0);
+    }
     game->scene->addItem(icon);
 
-    // Draw the text
-    setDefaultTextColor(Qt::red);
-    setFont(QFont("times", 16));
     updateUI();
 }
 
@@ -40,5 +47,8 @@ int Wallet::getGold(){
 void Wallet::updateUI()
 {
     setPlainText(QString::number(gold));
-    setPos(game->width() - this->boundingRect().width() - icon->boundingRect().width() - 5, 0);
+    if(side == "blue")
+        setPos(game->width() - this->boundingRect().width() - icon->boundingRect().width() - 5, 0);
+    else if(side == "red")
+        setPos(icon->boundingRect().width()*2/3, icon->boundingRect().height()/2);
 }

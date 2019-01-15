@@ -8,7 +8,7 @@
 class Citadel: public CustomSprite
 {
 public:
-    Citadel(QPoint pos, QString team, QGraphicsItem* parent=0);
+    Citadel(QPoint pos, string team, QGraphicsItem* parent=0);
     void start();
     bool canBePlaced();
     void destroyed();

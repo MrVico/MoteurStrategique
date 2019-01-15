@@ -11,13 +11,13 @@ class Bullet: public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT
 public:
-    Bullet(QString team, QPoint pos, CustomSprite* target, QGraphicsItem * parent=0);
+    Bullet(string team, QPoint pos, CustomSprite* target, QGraphicsItem * parent=0);
 
 protected:
     void timerEvent(QTimerEvent *e) override;
 
 private:
-    QString team;
+    string team;
     CustomSprite* target;
     int speed;
 };

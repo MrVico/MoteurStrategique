@@ -10,11 +10,15 @@
 
 extern Game* game;
 
-Mine::Mine(QString team, QGraphicsItem *parent):QObject(), CustomSprite(team, parent){
-    if(this->team == QString("red"))
-        setPixmap(QPixmap(":/images/redMineLow.png"));
+Mine::Mine(string team, bool initialMine, QGraphicsItem *parent):QObject(), CustomSprite(team, parent){
+    if(this->team == "red")
+        if(initialMine)
+            setPixmap(QPixmap(":/images/redMine.png"));
+        else
+            setPixmap(QPixmap(":/images/redMineLow.png"));
     else
         setPixmap(QPixmap(":/images/blueMine.png"));
+    this->initialMine = initialMine;
 }
 
 // Start mining
@@ -22,8 +26,10 @@ void Mine::start()
 {
     game->scene->addItem(hpText);
     // We set the position of the mine spot
-    setPos(lastMineSpot->pos());
-    game->scene->removeItem(lastMineSpot);
+    if(!this->initialMine){
+        setPos(lastMineSpot->pos());
+        game->scene->removeItem(lastMineSpot);
+    }
 
     updateUI();
 
@@ -37,7 +43,7 @@ bool Mine::canBePlaced()
     if(colliders.size() > 0){
         for(int i=0; i<colliders.size(); i++){
             if(typeid(*(colliders[i])) == typeid(MineSpot)){
-                if(this->team == QString("red"))
+                if(this->team == "red")
                     setPixmap(QPixmap(":/images/redMine.png"));
                 else
                     setPixmap(QPixmap(":/images/blueMine.png"));
@@ -55,11 +61,12 @@ void Mine::destroyed()
 {
     game->scene->removeItem(this->hpText);
     game->scene->removeItem(this);
-    game->createMineSpot(QPoint(this->pos().x(), this->pos().y()));
+    new MineSpot(QPoint(this->pos().x(), this->pos().y()));
+    // How do we delete the object ???
 }
 
 void Mine::timerEvent(QTimerEvent *e)
 {
     // Mine gold
-    game->wallet->add(1);
+    game->getMyWallet(this->team)->add(1);
 }

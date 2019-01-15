@@ -9,16 +9,16 @@ extern Game *game;
 
 SpawnSoldierButton::SpawnSoldierButton(QGraphicsItem *parent): QObject(), QGraphicsPixmapItem(parent){
     // Draw the icon
-    setPixmap(QPixmap(":/images/soldierIconLow.png"));
+    setPixmap(QPixmap(":/images/soldierIcon.png"));
     offset = 10;
-    setPos(boundingRect().width()+offset, 5);
+    setPos(game->spriteSize*3+offset, 5);
 
     // Draw the price text
     text = new QGraphicsTextItem();
     text->setPlainText(QString::number(game->soldierPrice));
     text->setDefaultTextColor(Qt::red);
     text->setFont(QFont("times", 10));
-    text->setPos(boundingRect().width() + offset + 5, boundingRect().height());
+    text->setPos(game->spriteSize*3 + offset + 5, boundingRect().height());
     game->scene->addItem(text);
 
     QBasicTimer* timer = new QBasicTimer();
@@ -27,18 +27,18 @@ SpawnSoldierButton::SpawnSoldierButton(QGraphicsItem *parent): QObject(), QGraph
 
 void SpawnSoldierButton::mousePressEvent(QGraphicsSceneMouseEvent *event){
     // If we have enough gold
-    if (game->wallet->getGold() >= game->soldierPrice){
-        game->sprite = new Soldier(QString("red"));
-        game->sprite->setPos(event->pos().x()+game->sprite->boundingRect().width()+offset - game->sprite->boundingRect().width()/2, event->pos().y() - game->sprite->boundingRect().height()/2);
+    if (game->getMyWallet("red")->getGold() >= game->soldierPrice){
+        game->sprite = new Soldier("red");
+        game->sprite->setPos(event->pos().x()+game->spriteSize*3+offset - game->sprite->boundingRect().width()/2, event->pos().y() - game->sprite->boundingRect().height()/2);
         game->scene->addItem(game->sprite);
 
-        game->wallet->spend(game->soldierPrice);
+        game->getMyWallet("red")->spend(game->soldierPrice);
     }
 }
 
 void SpawnSoldierButton::timerEvent(QTimerEvent *event)
 {
-    if(game->wallet->getGold() >= game->soldierPrice)
+    if(game->getMyWallet("red")->getGold() >= game->soldierPrice)
         setPixmap(QPixmap(":/images/soldierIcon.png"));
     else
         setPixmap(QPixmap(":/images/soldierIconLow.png"));
