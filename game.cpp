@@ -4,6 +4,7 @@
 #include "spawnsoldierbutton.h"
 #include "soldier.h"
 #include "minespot.h"
+#include "citadel.h"
 
 #include <QGraphicsScene>
 #include <QGraphicsTextItem>
@@ -76,6 +77,12 @@ void Game::displayGame()
 
     // Spawn mine spots
     spawnGoldMineSpots();
+
+    // Spawn the two citadels
+    Citadel* redCitadel = new Citadel(QPoint(5, this->height()/2-spriteSize*2), QString("red"));
+    scene->addItem(redCitadel);
+    Citadel* blueCitadel = new Citadel(QPoint(this->width()-spriteSize*2-5, this->height()/2-spriteSize*2), QString("blue"));
+    scene->addItem(blueCitadel);
 }
 
 void Game::spawnGoldMineSpots()

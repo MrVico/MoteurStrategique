@@ -1,6 +1,7 @@
 #include <QApplication>
 #include <QLabel>
 #include <QSurfaceFormat>
+#include <QDesktopWidget>
 
 #ifndef QT_NO_OPENGL
 #include "mainwidget.h"
@@ -30,6 +31,8 @@ int main(int argc, char *argv[])
     */
 
     game = new Game();
+    game->adjustSize();
+    game->move(QApplication::desktop()->screen()->rect().center() - game->rect().center());
     game->show();
     game->displayMainMenu();
 

@@ -2,6 +2,6 @@
 
 MineSpot::MineSpot(QPoint pos, QGraphicsItem *parent): QGraphicsPixmapItem(parent)
 {
-    setPixmap(QPixmap(":/images/mine.png"));
+    setPixmap(QPixmap(":/images/mineSpot.png"));
     setPos(pos);
 }

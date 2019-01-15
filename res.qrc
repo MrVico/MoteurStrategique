@@ -1,11 +1,14 @@
 <RCC>
     <qresource prefix="/images/">
-        <file>mine.png</file>
-        <file>mining.png</file>
+        <file>mineSpot.png</file>
+        <file>redMine.png</file>
+        <file>blueMine.png</file>
         <file>miningDisabled.png</file>
         <file>m.png</file>
         <file>goldIngots.png</file>
         <file>soldierIcon.png</file>
         <file>soldierSprite.png</file>
+        <file>redCitadel.png</file>
+        <file>blueCitadel.png</file>
     </qresource>
 </RCC>

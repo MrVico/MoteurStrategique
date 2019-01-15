@@ -7,7 +7,7 @@ extern Game* game;
 
 Wallet::Wallet(QGraphicsItem *parent): QGraphicsTextItem(parent)
 {
-    gold = 0;
+    gold = 50;
 
     // Draw the icon
     icon = new QGraphicsPixmapItem();
@@ -17,7 +17,7 @@ Wallet::Wallet(QGraphicsItem *parent): QGraphicsTextItem(parent)
 
     // Draw the text
     setDefaultTextColor(Qt::red);
-    setFont(QFont("times",16));
+    setFont(QFont("times", 16));
     updateUI();
 }
 

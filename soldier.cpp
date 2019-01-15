@@ -26,10 +26,10 @@ bool Soldier::canBePlaced()
     QList<QGraphicsItem*> colliders = collidingItems();
     if(colliders.size()>0){
         //setPixmap(QPixmap(":/images/miningDisabled.png"));
-        return true;
+        return false;
     }
     //setPixmap(QPixmap(":/images/mining.png"));
-    return false;
+    return true;
 }
 
 void Soldier::timerEvent(QTimerEvent *e)

@@ -21,6 +21,15 @@ void Mine::start()
     // We set the position of the mine spot
     setPos(lastMineSpot->pos());
     game->scene->removeItem(lastMineSpot);
+
+    // And set up the health system
+    healthPoints = 10;
+    hpText = new QGraphicsTextItem();
+    hpText->setFont(QFont("times", 10));
+    hpText->setPlainText(QString::number(healthPoints));
+    hpText->setPos(this->pos().x()+this->boundingRect().width()/2-hpText->boundingRect().width()/2, this->pos().y()+this->boundingRect().height()-8);
+    game->scene->addItem(hpText);
+
     QBasicTimer* timer = new QBasicTimer();
     timer->start(1000, this);
 }
@@ -31,7 +40,10 @@ bool Mine::canBePlaced()
     if(colliders.size() > 0){
         for(int i=0; i<colliders.size(); i++){
             if(typeid(*(colliders[i])) == typeid(MineSpot)){
-                setPixmap(QPixmap(":/images/mining.png"));
+                if(rand() % 2 == 0)
+                    setPixmap(QPixmap(":/images/redMine.png"));
+                else
+                    setPixmap(QPixmap(":/images/blueMine.png"));
                 // We store the last mine so we can use it if needed
                 lastMineSpot = dynamic_cast<MineSpot*>(colliders[i]);
                 return true;
