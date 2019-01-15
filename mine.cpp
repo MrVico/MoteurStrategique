@@ -33,7 +33,7 @@ void Mine::start()
 
     updateUI();
 
-    QBasicTimer* timer = new QBasicTimer();
+    timer = new QBasicTimer();
     timer->start(1000, this);
 }
 
@@ -62,6 +62,7 @@ void Mine::destroyed()
     game->scene->removeItem(this->hpText);
     game->scene->removeItem(this);
     new MineSpot(QPoint(this->pos().x(), this->pos().y()));
+    timer->stop();
     // How do we delete the object ???
 }
 

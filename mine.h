@@ -25,6 +25,7 @@ protected:
 private:
     bool initialMine;
     MineSpot* lastMineSpot;
+    QBasicTimer* timer;
 };
 
 #endif // MINE_H
