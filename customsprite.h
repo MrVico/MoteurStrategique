@@ -15,11 +15,11 @@ public:
     void updateUI();
     bool isInOurTeam(QString team);
 
-    bool placed = false;
+    QGraphicsTextItem* hpText;
 
 protected:
+    bool placed = false;
     QString team;
-    QGraphicsTextItem* hpText;
     int healthPoints;
 };
 

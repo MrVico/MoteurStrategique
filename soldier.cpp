@@ -23,6 +23,7 @@ Soldier::Soldier(QString team, QGraphicsItem *parent):QObject(), CustomSprite(te
 void Soldier::start()
 {
     placed = true;
+    game->scene->addItem(hpText);
     updateUI();
     time = reloadTime;
     QBasicTimer* timer = new QBasicTimer();

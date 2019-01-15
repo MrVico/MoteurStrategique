@@ -25,12 +25,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 HEADERS += \
-    mainwidget.h \
-    megaman.h \
-    terrain.h \
     soldier.h \
-    minion.h \
-    scavenger.h \
     button.h \
     game.h \
     buildmineicon.h \
@@ -48,12 +43,7 @@ HEADERS += \
 
 SOURCES += \
     main.cpp \
-    mainwidget.cpp \
-    megaman.cpp \
-    terrain.cpp \
     soldier.cpp \
-    minion.cpp \
-    scavenger.cpp \
     button.cpp \
     game.cpp \
     buildmineicon.cpp \

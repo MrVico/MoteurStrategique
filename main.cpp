@@ -10,7 +10,6 @@
 
 #include "astar.h"
 
-#include "mainwidget.h"
 #include "game.h"
 #endif
 

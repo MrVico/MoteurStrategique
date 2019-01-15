@@ -20,6 +20,7 @@ Mine::Mine(QString team, QGraphicsItem *parent):QObject(), CustomSprite(team, pa
 // Start mining
 void Mine::start()
 {
+    game->scene->addItem(hpText);
     // We set the position of the mine spot
     setPos(lastMineSpot->pos());
     game->scene->removeItem(lastMineSpot);

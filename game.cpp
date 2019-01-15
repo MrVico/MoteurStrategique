@@ -26,6 +26,8 @@ Game::Game(QWidget *parent)
     setScene(scene);
     sprite = nullptr;
     setMouseTracking(true);
+
+    spriteSize = 32;
 }
 
 void Game::displayMainMenu()
@@ -94,6 +96,7 @@ void Game::spawnGoldMineSpots()
     Mine* mine = new Mine(QString("blue"));
     mine->setPos(QPoint(this->width()-spriteSize-200, this->height()-spriteSize-100));
     mine->updateUI();
+    scene->addItem(mine->hpText);
     scene->addItem(mine);
     //createMineSpot(QPoint(this->width()-spriteSize-200, this->height()-spriteSize-100));
     createMineSpot(QPoint(this->width()-spriteSize-300, this->height()-spriteSize-200));

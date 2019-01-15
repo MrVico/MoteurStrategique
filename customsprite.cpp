@@ -12,7 +12,6 @@ CustomSprite::CustomSprite(QString team, QGraphicsItem *parent): QGraphicsPixmap
     hpText = new QGraphicsTextItem();
     hpText->setFont(QFont("times", 10));
     updateUI();
-    game->scene->addItem(hpText);
 }
 
 void CustomSprite::takeHit()
