@@ -50,6 +50,13 @@ bool Mine::canBePlaced()
     return false;
 }
 
+void Mine::destroyed()
+{
+    game->scene->removeItem(this->hpText);
+    game->scene->removeItem(this);
+    game->createMineSpot(QPoint(this->pos().x(), this->pos().y()));
+}
+
 void Mine::timerEvent(QTimerEvent *e)
 {
     // Mine gold

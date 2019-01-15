@@ -29,6 +29,11 @@ bool Bullet::canBePlaced()
     return false;
 }
 
+void Bullet::destroyed()
+{
+
+}
+
 void Bullet::timerEvent(QTimerEvent *e)
 {
     //qDebug() << "destination: " << target->pos();

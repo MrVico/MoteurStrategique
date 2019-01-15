@@ -14,6 +14,7 @@ public:
     Bullet(QString team, QPoint pos, CustomSprite* target, QGraphicsItem * parent=0);
     void start();
     bool canBePlaced();
+    void destroyed();
 
 protected:
     void timerEvent(QTimerEvent *e) override;

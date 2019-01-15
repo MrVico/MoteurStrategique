@@ -16,6 +16,7 @@ public:
     Soldier(QString team, QGraphicsItem * parent=0);
     void start();
     bool canBePlaced();
+    void destroyed();
     void moveTo(int x, int y);
 
 protected:

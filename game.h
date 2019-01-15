@@ -19,6 +19,7 @@ public:
     void displayMainMenu();
     void mouseMoveEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
+    void createMineSpot(QPoint pos);
 
     QGraphicsScene* scene;
     Wallet* wallet;
@@ -31,7 +32,6 @@ public slots:
 
 private:
     void spawnGoldMineSpots();
-    void createMineSpot(QPoint pos);
 
 };
 

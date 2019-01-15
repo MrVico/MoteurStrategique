@@ -40,6 +40,11 @@ bool Soldier::canBePlaced()
     return true;
 }
 
+void Soldier::destroyed()
+{
+
+}
+
 void Soldier::moveTo(int x, int y) {
     destination = QPoint(x,y);
 }

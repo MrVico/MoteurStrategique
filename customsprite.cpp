@@ -18,6 +18,8 @@ CustomSprite::CustomSprite(QString team, QGraphicsItem *parent): QGraphicsPixmap
 void CustomSprite::takeHit()
 {
     healthPoints--;
+    if(healthPoints <= 0)
+        this->destroyed();
     updateUI();
 }
 
