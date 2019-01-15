@@ -132,6 +132,14 @@ void Game::mousePressEvent(QMouseEvent *event)
         scene->removeItem(sprite);
         sprite = nullptr;
     }
+    else if(event->button() == Qt::RightButton){
+       foreach (QGraphicsItem* item, scene->items()) {
+           if(typeid(*(item)) == typeid(Soldier)) {
+               Soldier* itemSprite = dynamic_cast<Soldier*>(item);
+               itemSprite->moveTo(event->pos().x() - itemSprite->boundingRect().width()/2, event->pos().y() - itemSprite->boundingRect().height()/2);
+           }
+       }
+   }
     // Else we delegate to the parent
     else{
         QGraphicsView::mousePressEvent(event);

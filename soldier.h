@@ -16,9 +16,16 @@ public:
     Soldier(QGraphicsItem * parent=0);
     void start();
     bool canBePlaced();
+    void moveTo(int x, int y);
 
 protected:
     void timerEvent(QTimerEvent *e) override;
+
+private:
+    void stop();
+
+    QPoint target;
+    int speed;
 };
 
 #endif // SOLDIER_H
