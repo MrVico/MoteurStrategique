@@ -12,7 +12,7 @@ extern Game* game;
 
 Mine::Mine(QString team, QGraphicsItem *parent):QObject(), CustomSprite(team, parent){
     if(this->team == QString("red"))
-        setPixmap(QPixmap(":/images/miningDisabled.png"));
+        setPixmap(QPixmap(":/images/redMineLow.png"));
     else
         setPixmap(QPixmap(":/images/blueMine.png"));
 }
@@ -47,7 +47,7 @@ bool Mine::canBePlaced()
             }
         }
     }
-    setPixmap(QPixmap(":/images/miningDisabled.png"));
+    setPixmap(QPixmap(":/images/redMineLow.png"));
     return false;
 }
 

@@ -3,12 +3,19 @@
 
 #include <QGraphicsPixmapItem>
 #include <QGraphicsSceneMouseEvent>
+#include <QObject>
+#include <QBasicTimer>
+#include <QTimerEvent>
 
-class SpawnSoldierButton: public QGraphicsPixmapItem
+class SpawnSoldierButton: public QObject, public QGraphicsPixmapItem
 {
+    Q_OBJECT
 public:
     SpawnSoldierButton(QGraphicsItem* parent=0);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
+
+protected:
+    void timerEvent(QTimerEvent *event) override;
 
 private:
     QGraphicsTextItem* text;

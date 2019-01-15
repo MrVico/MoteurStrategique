@@ -11,9 +11,9 @@
 
 extern Game* game;
 
-Soldier::Soldier(QString team, QGraphicsItem *parent):QObject(), CustomSprite(team, parent){
+Soldier::Soldier(QString team, QGraphicsItem *parent): QObject(), CustomSprite(team, parent){
     // Set the graphic
-    setPixmap(QPixmap(":/images/soldierSprite.png"));
+    setPixmap(QPixmap(":/images/redSoldierLow.png"));
     viewRange = 200;
     speed = 2;
     reloadTime = 300;
@@ -35,10 +35,10 @@ bool Soldier::canBePlaced()
 {
     QList<QGraphicsItem*> colliders = collidingItems();
     if(colliders.size()>0){
-        //setPixmap(QPixmap(":/images/miningDisabled.png"));
+        setPixmap(QPixmap(":/images/redSoldierLow.png"));
         return false;
     }
-    //setPixmap(QPixmap(":/images/mining.png"));
+    setPixmap(QPixmap(":/images/redSoldier.png"));
     return true;
 }
 
@@ -93,7 +93,7 @@ void Soldier::timerEvent(QTimerEvent *e)
     CustomSprite* target = checkFOV();
     // Shoot
     if(target && time > reloadTime){
-        Bullet* bullet = new Bullet(this->team, QPoint(this->pos().x()+this->boundingRect().width()/2, this->pos().y()+this->boundingRect().height()/2), target);
+        new Bullet(this->team, QPoint(this->pos().x()+this->boundingRect().width()/2, this->pos().y()+this->boundingRect().height()/2), target);
         time = 0;
     }
     // Move

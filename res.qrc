@@ -2,12 +2,16 @@
     <qresource prefix="/images/">
         <file>mineSpot.png</file>
         <file>redMine.png</file>
+        <file>redMineLow.png</file>
         <file>blueMine.png</file>
-        <file>miningDisabled.png</file>
-        <file>m.png</file>
         <file>goldIngots.png</file>
         <file>soldierIcon.png</file>
-        <file>soldierSprite.png</file>
+        <file>soldierIconLow.png</file>
+        <file>mineIcon.png</file>
+        <file>mineIconLow.png</file>
+        <file>redSoldier.png</file>
+        <file>redSoldierLow.png</file>
+        <file>blueSoldier.png</file>
         <file>redCitadel.png</file>
         <file>blueCitadel.png</file>
         <file>bullet.png</file>

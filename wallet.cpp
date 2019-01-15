@@ -7,7 +7,7 @@ extern Game* game;
 
 Wallet::Wallet(QGraphicsItem *parent): QGraphicsTextItem(parent)
 {
-    gold = 500;
+    gold = 50;
 
     // Draw the icon
     icon = new QGraphicsPixmapItem();

@@ -22,7 +22,7 @@ void Citadel::start()
 
 bool Citadel::canBePlaced()
 {
-
+    return false;
 }
 
 void Citadel::destroyed()

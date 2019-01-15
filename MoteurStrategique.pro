@@ -56,7 +56,6 @@ SOURCES += \
     bullet.cpp
 
 RESOURCES += \
-    shaders.qrc \
     res.qrc
 
 # Default rules for deployment.

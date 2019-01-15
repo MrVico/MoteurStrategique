@@ -3,15 +3,19 @@
 
 #include <QGraphicsPixmapItem>
 #include <QGraphicsSceneMouseEvent>
+#include <QObject>
+#include <QBasicTimer>
+#include <QTimerEvent>
 
-class BuildMineIcon: public QGraphicsPixmapItem
+class BuildMineIcon: public QObject, public QGraphicsPixmapItem
 {
+    Q_OBJECT
 public:
     BuildMineIcon(QGraphicsItem* parent=0);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
-private:
-    int offset;
+protected:
+    void timerEvent(QTimerEvent *event) override;
 };
 
 #endif // BUILDMINEICON_H
