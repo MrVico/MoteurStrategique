@@ -6,10 +6,11 @@
 
 extern Game* game;
 
-Bullet::Bullet(QString team, QPoint pos, CustomSprite* target, QGraphicsItem *parent):QObject(), CustomSprite(team, parent)
+Bullet::Bullet(QString team, QPoint pos, CustomSprite* target, QGraphicsItem *parent):QObject(), QGraphicsPixmapItem(parent)
 {
     setPixmap(QPixmap(":/images/bullet.png"));
     setPos(pos);
+    this->team = team;
     this->target = target;
     this->speed = 4;
 
@@ -17,21 +18,6 @@ Bullet::Bullet(QString team, QPoint pos, CustomSprite* target, QGraphicsItem *pa
     timer->start(10, this);
 
     game->scene->addItem(this);
-}
-
-void Bullet::start()
-{
-
-}
-
-bool Bullet::canBePlaced()
-{
-    return false;
-}
-
-void Bullet::destroyed()
-{
-
 }
 
 void Bullet::timerEvent(QTimerEvent *e)
@@ -50,7 +36,7 @@ void Bullet::timerEvent(QTimerEvent *e)
 
     int currentX = this->pos().x();
     int currentY = this->pos().y();
-    QVector2D direction = QVector2D(target->pos().x()-currentX+game->spriteSize/2, target->pos().y()-currentY+game->spriteSize/2);
+    QVector2D direction = QVector2D(target->pos().x()-currentX+target->boundingRect().width()/2, target->pos().y()-currentY+target->boundingRect().height()/2);
     direction.normalize();
     this->setPos(currentX + direction.x()*speed, currentY + direction.y()*speed);
 }

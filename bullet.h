@@ -7,19 +7,17 @@
 #include <QBasicTimer>
 #include <QTimerEvent>
 
-class Bullet: public QObject, public CustomSprite
+class Bullet: public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT
 public:
     Bullet(QString team, QPoint pos, CustomSprite* target, QGraphicsItem * parent=0);
-    void start();
-    bool canBePlaced();
-    void destroyed();
 
 protected:
     void timerEvent(QTimerEvent *e) override;
 
 private:
+    QString team;
     CustomSprite* target;
     int speed;
 };

@@ -26,8 +26,6 @@ Game::Game(QWidget *parent)
     setScene(scene);
     sprite = nullptr;
     setMouseTracking(true);
-
-    spriteSize = 32;
 }
 
 void Game::displayMainMenu()

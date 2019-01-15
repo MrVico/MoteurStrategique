@@ -16,14 +16,11 @@ public:
     bool isInOurTeam(QString team);
 
     bool placed = false;
-    QGraphicsTextItem* hpText;
 
 protected:
     QString team;
-
-private:
+    QGraphicsTextItem* hpText;
     int healthPoints;
-
 };
 
 

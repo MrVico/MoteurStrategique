@@ -2,6 +2,7 @@
 #include "game.h"
 #include "customsprite.h"
 #include "bullet.h"
+#include "citadel.h"
 
 #include <QPixmap>
 #include <QDebug>
@@ -56,10 +57,10 @@ void Soldier::stop() {
 CustomSprite* Soldier::checkFOV()
 {
     foreach (QGraphicsItem* item, game->scene->items()) {
-        if(typeid(*(item)) == typeid(Mine)) {
-            Mine* mine = dynamic_cast<Mine*>(item);
-            if(!mine->isInOurTeam(this->team) && QVector2D(mine->pos().x()-this->pos().x(), mine->pos().y()-this->pos().y()).length() < viewRange){
-                return mine;
+        if(typeid(*(item)) == typeid(Mine) || typeid(*(item)) == typeid(Soldier) || typeid(*(item)) == typeid(Citadel)) {
+            CustomSprite* sprite = dynamic_cast<CustomSprite*>(item);
+            if(!sprite->isInOurTeam(this->team) && QVector2D(sprite->pos().x()-this->pos().x(), sprite->pos().y()-this->pos().y()).length() < viewRange){
+                return sprite;
             }
         }
     }
@@ -97,7 +98,7 @@ void Soldier::timerEvent(QTimerEvent *e)
     // Move
     else if(!isCollidingWithSoldier()){
         QVector2D distToTarget = QVector2D(destination.x()-this->pos().x(), destination.y()-this->pos().y());
-        if (distToTarget.length() > game->spriteSize) {
+        if (distToTarget.length() > 32) {
             distToTarget.normalize();
             this->setPos(this->pos().x() + distToTarget.x()*speed, this->pos().y() + distToTarget.y()*speed);
         }

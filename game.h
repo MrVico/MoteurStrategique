@@ -25,7 +25,6 @@ public:
     Wallet* wallet;
     CustomSprite* sprite;
     int soldierPrice = 50;
-    int spriteSize;
 
 public slots:
     void displayGame();
