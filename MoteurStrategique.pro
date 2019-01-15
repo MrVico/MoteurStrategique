@@ -39,7 +39,11 @@ HEADERS += \
     customsprite.h \
     wallet.h \
     minespot.h \
-    citadel.h
+    citadel.h \
+    point.h \
+    node.h \
+    map.h \
+    astar.h
 
 SOURCES += \
     main.cpp \
