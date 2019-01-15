@@ -10,9 +10,11 @@
 
 extern Game* game;
 
-Mine::Mine(QGraphicsItem *parent):QObject(), CustomSprite(parent){
-    // Set the graphic
-    setPixmap(QPixmap(":/images/miningDisabled.png"));
+Mine::Mine(QString team, QGraphicsItem *parent):QObject(), CustomSprite(team, parent){
+    if(this->team == QString("red"))
+        setPixmap(QPixmap(":/images/miningDisabled.png"));
+    else
+        setPixmap(QPixmap(":/images/blueMine.png"));
 }
 
 // Start mining
@@ -40,7 +42,7 @@ bool Mine::canBePlaced()
     if(colliders.size() > 0){
         for(int i=0; i<colliders.size(); i++){
             if(typeid(*(colliders[i])) == typeid(MineSpot)){
-                if(rand() % 2 == 0)
+                if(this->team == QString("red"))
                     setPixmap(QPixmap(":/images/redMine.png"));
                 else
                     setPixmap(QPixmap(":/images/blueMine.png"));

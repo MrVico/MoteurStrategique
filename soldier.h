@@ -13,7 +13,7 @@ class Soldier: public QObject, public CustomSprite
 {
     Q_OBJECT
 public:
-    Soldier(QGraphicsItem * parent=0);
+    Soldier(QString team, QGraphicsItem * parent=0);
     void start();
     bool canBePlaced();
     void moveTo(int x, int y);
@@ -23,7 +23,9 @@ protected:
 
 private:
     void stop();
+    bool checkFOV();
 
+    int viewRange;
     QPoint target;
     int speed;
 };

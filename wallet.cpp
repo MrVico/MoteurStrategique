@@ -12,7 +12,7 @@ Wallet::Wallet(QGraphicsItem *parent): QGraphicsTextItem(parent)
     // Draw the icon
     icon = new QGraphicsPixmapItem();
     icon->setPixmap(QPixmap(":/images/goldIngots.png"));
-    icon->setPos(game->width() - icon->boundingRect().width() - 5, 5);
+    icon->setPos(game->width() - icon->boundingRect().width() - 5, 0);
     game->scene->addItem(icon);
 
     // Draw the text
@@ -40,5 +40,5 @@ int Wallet::getGold(){
 void Wallet::updateUI()
 {
     setPlainText(QString::number(gold));
-    setPos(game->width() - this->boundingRect().width() - icon->boundingRect().width() - 5, 5);
+    setPos(game->width() - this->boundingRect().width() - icon->boundingRect().width() - 5, 0);
 }

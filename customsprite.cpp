@@ -1,6 +1,11 @@
 #include "customsprite.h"
 
-CustomSprite::CustomSprite(QGraphicsItem *parent): QGraphicsPixmapItem(parent)
+CustomSprite::CustomSprite(QString team, QGraphicsItem *parent): QGraphicsPixmapItem(parent)
 {
+    this->team = team;
+}
 
+bool CustomSprite::isInOurTeam(QString team)
+{
+    return this->team == team;
 }

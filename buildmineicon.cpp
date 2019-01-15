@@ -17,7 +17,7 @@ void BuildMineIcon::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     //qDebug() << "MINE PRESSED " << event->pos();
     if (!game->sprite){
-        game->sprite = new Mine();
+        game->sprite = new Mine(QString("red"));
         game->sprite->setPos(event->pos().x() - game->sprite->boundingRect().width()/2, event->pos().y() - game->sprite->boundingRect().height()/2);
         game->scene->addItem(game->sprite);
     }

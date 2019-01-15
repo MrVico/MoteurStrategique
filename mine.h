@@ -14,7 +14,7 @@ class Mine: public QObject, public CustomSprite
 {
     Q_OBJECT
 public:
-    Mine(QGraphicsItem * parent=0);
+    Mine(QString team, QGraphicsItem * parent=0);
     void start();
     bool canBePlaced();
 

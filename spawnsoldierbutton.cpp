@@ -26,7 +26,7 @@ void SpawnSoldierButton::mousePressEvent(QGraphicsSceneMouseEvent *event){
     //qDebug() << "SOLDIER PRESSED " << event->pos();
     // If we have enough gold
     if (game->wallet->getGold() >= game->soldierPrice){
-        game->sprite = new Soldier();
+        game->sprite = new Soldier(QString("red"));
         game->sprite->setPos(event->pos().x()+game->sprite->boundingRect().width()+offset - game->sprite->boundingRect().width()/2, event->pos().y() - game->sprite->boundingRect().height()/2);
         game->scene->addItem(game->sprite);
 

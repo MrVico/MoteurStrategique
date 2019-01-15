@@ -7,9 +7,14 @@
 class CustomSprite: public QGraphicsPixmapItem
 {
 public:
-    CustomSprite(QGraphicsItem* parent=0);
+    CustomSprite(QString team, QGraphicsItem* parent=0);
     virtual void start() = 0;
     virtual bool canBePlaced() = 0;
+    bool isInOurTeam(QString team);
+
+protected:
+    QString team;
+
 };
 
 

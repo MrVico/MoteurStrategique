@@ -93,7 +93,11 @@ void Game::spawnGoldMineSpots()
     createMineSpot(QPoint(400, 480));
     createMineSpot(QPoint(150, 600));
 
-    createMineSpot(QPoint(this->width()-spriteSize-200, this->height()-spriteSize-100));
+
+    Mine* mine = new Mine(QString("blue"));
+    mine->setPos(QPoint(this->width()-spriteSize-200, this->height()-spriteSize-100));
+    scene->addItem(mine);
+    //createMineSpot(QPoint(this->width()-spriteSize-200, this->height()-spriteSize-100));
     createMineSpot(QPoint(this->width()-spriteSize-300, this->height()-spriteSize-200));
     createMineSpot(QPoint(this->width()-spriteSize-200, this->height()-spriteSize-400));
     createMineSpot(QPoint(this->width()-spriteSize-400, this->height()-spriteSize-480));
