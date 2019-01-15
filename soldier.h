@@ -23,11 +23,14 @@ protected:
 
 private:
     void stop();
-    bool checkFOV();
+    CustomSprite* checkFOV();
 
     int viewRange;
-    QPoint target;
+    QPoint destination;
     int speed;
+    int reloadTime;
+
+    int time;
 };
 
 #endif // SOLDIER_H

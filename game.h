@@ -24,6 +24,7 @@ public:
     Wallet* wallet;
     CustomSprite* sprite;
     int soldierPrice = 50;
+    int spriteSize;
 
 public slots:
     void displayGame();
@@ -32,7 +33,6 @@ private:
     void spawnGoldMineSpots();
     void createMineSpot(QPoint pos);
 
-    int spriteSize;
 };
 
 #endif // GAME_H

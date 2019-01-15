@@ -10,5 +10,6 @@
         <file>soldierSprite.png</file>
         <file>redCitadel.png</file>
         <file>blueCitadel.png</file>
+        <file>bullet.png</file>
     </qresource>
 </RCC>

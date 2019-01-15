@@ -24,6 +24,8 @@ void Mine::start()
     setPos(lastMineSpot->pos());
     game->scene->removeItem(lastMineSpot);
 
+    updateUI();
+/*
     // And set up the health system
     healthPoints = 10;
     hpText = new QGraphicsTextItem();
@@ -31,7 +33,7 @@ void Mine::start()
     hpText->setPlainText(QString::number(healthPoints));
     hpText->setPos(this->pos().x()+this->boundingRect().width()/2-hpText->boundingRect().width()/2, this->pos().y()+this->boundingRect().height()-8);
     game->scene->addItem(hpText);
-
+*/
     QBasicTimer* timer = new QBasicTimer();
     timer->start(1000, this);
 }

@@ -43,7 +43,8 @@ HEADERS += \
     point.h \
     node.h \
     map.h \
-    astar.h
+    astar.h \
+    bullet.h
 
 SOURCES += \
     main.cpp \
@@ -61,7 +62,8 @@ SOURCES += \
     customsprite.cpp \
     wallet.cpp \
     minespot.cpp \
-    citadel.cpp
+    citadel.cpp \
+    bullet.cpp
 
 RESOURCES += \
     shaders.qrc \

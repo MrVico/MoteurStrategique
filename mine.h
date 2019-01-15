@@ -22,8 +22,6 @@ protected:
     void timerEvent(QTimerEvent *e) override;
 
 private:
-    QGraphicsTextItem* hpText;
-    int healthPoints;
     MineSpot* lastMineSpot;
 };
 

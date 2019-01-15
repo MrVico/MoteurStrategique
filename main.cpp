@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
     game->move(QApplication::desktop()->screen()->rect().center() - game->rect().center());
     game->show();
     game->displayMainMenu();
-
+    /*
     // test a*
     map m;
     point s;
@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
     }
 
     std::cout << std::endl;
-
+    */
 #else
     QLabel note("OpenGL Support required");
     note.show();
