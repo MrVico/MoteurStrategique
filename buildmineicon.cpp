@@ -1,5 +1,5 @@
-#include "BuildMineIcon.h"
-#include "Game.h"
+#include "buildmineicon.h"
+#include "game.h"
 
 #include <QDebug>
 
@@ -15,7 +15,7 @@ BuildMineIcon::BuildMineIcon(QGraphicsItem *parent): QGraphicsPixmapItem(parent)
 
 void BuildMineIcon::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    qDebug() << "MINE PRESSED " << event->pos();
+    //qDebug() << "MINE PRESSED " << event->pos();
     if (!game->sprite){
         game->sprite = new Mine();
         game->sprite->setPos(event->pos().x() - game->sprite->boundingRect().width()/2, event->pos().y() - game->sprite->boundingRect().height()/2);

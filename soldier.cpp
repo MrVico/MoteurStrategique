@@ -1,6 +1,6 @@
-#include "Soldier.h"
-#include "Game.h"
-#include "CustomSprite.h"
+#include "soldier.h"
+#include "game.h"
+#include "customsprite.h"
 
 #include <QPixmap>
 #include <QDebug>
@@ -21,7 +21,7 @@ void Soldier::start()
     timer->start(1000, this);
 }
 
-bool Soldier::checkForCollisions()
+bool Soldier::canBePlaced()
 {
     QList<QGraphicsItem*> colliders = collidingItems();
     if(colliders.size()>0){

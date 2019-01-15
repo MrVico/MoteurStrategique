@@ -1,6 +1,6 @@
-#include "SpawnSoldierButton.h"
-#include "Game.h"
-#include "Soldier.h"
+#include "spawnsoldierbutton.h"
+#include "game.h"
+#include "soldier.h"
 
 #include <QDebug>
 
@@ -23,7 +23,7 @@ SpawnSoldierButton::SpawnSoldierButton(QGraphicsItem *parent): QGraphicsPixmapIt
 }
 
 void SpawnSoldierButton::mousePressEvent(QGraphicsSceneMouseEvent *event){
-    qDebug() << "SOLDIER PRESSED " << event->pos();
+    //qDebug() << "SOLDIER PRESSED " << event->pos();
     // If we have enough gold
     if (game->wallet->getGold() >= game->soldierPrice){
         game->sprite = new Soldier();

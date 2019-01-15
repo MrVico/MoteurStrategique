@@ -3,8 +3,8 @@
 #include <QSurfaceFormat>
 
 #ifndef QT_NO_OPENGL
-#include "Mainwidget.h"
-#include "Game.h"
+#include "mainwidget.h"
+#include "game.h"
 #endif
 
 // External variable

@@ -1,8 +1,9 @@
-#include "Game.h"
-#include "Button.h"
-#include "BuildMineIcon.h"
-#include "SpawnSoldierButton.h"
-#include "Soldier.h"
+#include "game.h"
+#include "button.h"
+#include "buildmineicon.h"
+#include "spawnsoldierbutton.h"
+#include "soldier.h"
+#include "minespot.h"
 
 #include <QGraphicsScene>
 #include <QGraphicsTextItem>
@@ -24,6 +25,8 @@ Game::Game(QWidget *parent)
     setScene(scene);
     sprite = nullptr;
     setMouseTracking(true);
+
+    spriteSize = 32;
 }
 
 void Game::displayMainMenu()
@@ -70,13 +73,37 @@ void Game::displayGame()
     // Wallet
     wallet = new Wallet();
     scene->addItem(wallet);
+
+    // Spawn mine spots
+    spawnGoldMineSpots();
+}
+
+void Game::spawnGoldMineSpots()
+{
+    createMineSpot(QPoint(200, 100));
+    createMineSpot(QPoint(300, 200));
+    createMineSpot(QPoint(200, 400));
+    createMineSpot(QPoint(400, 480));
+    createMineSpot(QPoint(150, 600));
+
+    createMineSpot(QPoint(this->width()-spriteSize-200, this->height()-spriteSize-100));
+    createMineSpot(QPoint(this->width()-spriteSize-300, this->height()-spriteSize-200));
+    createMineSpot(QPoint(this->width()-spriteSize-200, this->height()-spriteSize-400));
+    createMineSpot(QPoint(this->width()-spriteSize-400, this->height()-spriteSize-480));
+    createMineSpot(QPoint(this->width()-spriteSize-150, this->height()-spriteSize-600));
+}
+
+void Game::createMineSpot(QPoint pos)
+{
+    MineSpot* spot = new MineSpot(pos);
+    scene->addItem(spot);
 }
 
 void Game::mouseMoveEvent(QMouseEvent *event)
 {
     if(sprite){
         sprite->setPos(event->pos().x() - sprite->boundingRect().width()/2, event->pos().y() - sprite->boundingRect().height()/2);
-        sprite->checkForCollisions();
+        sprite->canBePlaced();
     }
     else{
         QGraphicsView::mouseMoveEvent(event);
@@ -85,8 +112,8 @@ void Game::mouseMoveEvent(QMouseEvent *event)
 
 void Game::mousePressEvent(QMouseEvent *event)
 {
-    // If we left click with a sprite and there aren't any collisions we build it
-    if(event->button() == Qt::LeftButton && sprite && !sprite->checkForCollisions()){
+    // If we left click with a sprite and the sprite can be placed we do so
+    if(event->button() == Qt::LeftButton && sprite && sprite->canBePlaced()){
         sprite->start();
         sprite = nullptr;
     }

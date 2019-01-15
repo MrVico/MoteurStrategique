@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/images/">
+        <file>mine.png</file>
         <file>mining.png</file>
         <file>miningDisabled.png</file>
         <file>m.png</file>

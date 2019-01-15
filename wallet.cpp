@@ -1,5 +1,5 @@
-#include "Wallet.h"
-#include "Game.h"
+#include "wallet.h"
+#include "game.h"
 
 #include <QFont>
 

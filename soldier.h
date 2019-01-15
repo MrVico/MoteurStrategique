@@ -1,7 +1,7 @@
 #ifndef SOLDIER_H
 #define SOLDIER_H
 
-#include "CustomSprite.h"
+#include "customsprite.h"
 
 #include <QGraphicsPixmapItem>
 #include <QGraphicsItem>
@@ -15,7 +15,7 @@ class Soldier: public QObject, public CustomSprite
 public:
     Soldier(QGraphicsItem * parent=0);
     void start();
-    bool checkForCollisions();
+    bool canBePlaced();
 
 protected:
     void timerEvent(QTimerEvent *e) override;

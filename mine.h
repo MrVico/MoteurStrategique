@@ -1,7 +1,8 @@
 #ifndef MINE_H
 #define MINE_H
 
-#include "CustomSprite.h"
+#include "customsprite.h"
+#include "minespot.h"
 
 #include <QGraphicsPixmapItem>
 #include <QGraphicsItem>
@@ -15,10 +16,13 @@ class Mine: public QObject, public CustomSprite
 public:
     Mine(QGraphicsItem * parent=0);
     void start();
-    bool checkForCollisions();
+    bool canBePlaced();
 
 protected:
     void timerEvent(QTimerEvent *e) override;
+
+private:
+    MineSpot* lastMineSpot;
 };
 
 #endif // MINE_H

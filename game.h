@@ -1,9 +1,9 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "Mine.h"
-#include "Wallet.h"
-#include "CustomSprite.h"
+#include "mine.h"
+#include "wallet.h"
+#include "customsprite.h"
 
 #include <QGraphicsView>
 #include <QGraphicsScene>
@@ -27,6 +27,12 @@ public:
 
 public slots:
     void displayGame();
+
+private:
+    void spawnGoldMineSpots();
+    void createMineSpot(QPoint pos);
+
+    int spriteSize;
 };
 
 #endif // GAME_H
