@@ -5,6 +5,7 @@
 #include "soldier.h"
 #include "minespot.h"
 #include "citadel.h"
+#include "npc.h"
 
 #include <QGraphicsScene>
 #include <QGraphicsTextItem>
@@ -125,6 +126,10 @@ void Game::displayGame()
     scene->addItem(redCitadel);
     Citadel* blueCitadel = new Citadel(QPoint(this->width()-spriteSize*2-5, this->height()/2-spriteSize*2), "blue");
     scene->addItem(blueCitadel);
+
+    // Computer player
+    NPC* npc = new NPC();
+    npc->start();
 }
 
 void Game::spawnGoldMineSpots()
@@ -135,11 +140,11 @@ void Game::spawnGoldMineSpots()
     scene->addItem(redMine);
     redMine->start();
 
-    //new MineSpot(QPoint(200, 100));
-    new MineSpot(QPoint(300, 200));
-    new MineSpot(QPoint(200, 400));
-    new MineSpot(QPoint(400, 480));
-    new MineSpot(QPoint(150, 600));
+
+    mineSpots.append(new MineSpot(QPoint(300, 200)));
+    mineSpots.append(new MineSpot(QPoint(200, 400)));
+    mineSpots.append(new MineSpot(QPoint(400, 480)));
+    mineSpots.append(new MineSpot(QPoint(150, 600)));
 
     Mine* blueMine = new Mine("blue", 0, true);
     blueMine->setPos(QPoint(this->width()-spriteSize-200, this->height()-spriteSize-100));
@@ -147,10 +152,10 @@ void Game::spawnGoldMineSpots()
     scene->addItem(blueMine);
     blueMine->start();
 
-    new MineSpot(QPoint(this->width()-spriteSize-300, this->height()-spriteSize-200));
-    new MineSpot(QPoint(this->width()-spriteSize-200, this->height()-spriteSize-400));
-    new MineSpot(QPoint(this->width()-spriteSize-400, this->height()-spriteSize-480));
-    new MineSpot(QPoint(this->width()-spriteSize-150, this->height()-spriteSize-600));
+    mineSpots.append(new MineSpot(QPoint(this->width()-spriteSize-300, this->height()-spriteSize-200)));
+    mineSpots.append(new MineSpot(QPoint(this->width()-spriteSize-200, this->height()-spriteSize-400)));
+    mineSpots.append(new MineSpot(QPoint(this->width()-spriteSize-400, this->height()-spriteSize-480)));
+    mineSpots.append(new MineSpot(QPoint(this->width()-spriteSize-150, this->height()-spriteSize-600)));
 }
 
 Wallet *Game::getMyWallet(string team)
@@ -158,6 +163,21 @@ Wallet *Game::getMyWallet(string team)
     if(team == "red")
         return redWallet;
     return blueWallet;
+}
+
+QList<MineSpot*> Game::getOpenMineSpots()
+{
+    return mineSpots;
+}
+
+void Game::addMineSpot(MineSpot *mineSpot)
+{
+    mineSpots.append(mineSpot);
+}
+
+void Game::removeMineSpot(MineSpot *mineSpot)
+{
+    mineSpots.removeAt(mineSpots.indexOf(mineSpot));
 }
 
 void Game::mouseMoveEvent(QMouseEvent *event)
@@ -194,8 +214,9 @@ void Game::mousePressEvent(QMouseEvent *event)
     else if(event->button() == Qt::RightButton){
        foreach (QGraphicsItem* item, scene->items()) {
            if(typeid(*(item)) == typeid(Soldier)) {
-               Soldier* itemSprite = dynamic_cast<Soldier*>(item);
-               itemSprite->moveTo(event->pos().x() - itemSprite->boundingRect().width()/2, event->pos().y() - itemSprite->boundingRect().height()/2);
+               Soldier* soldier = dynamic_cast<Soldier*>(item);
+               if(soldier->isInOurTeam("red"))
+                    soldier->setDestination(event->pos().x() - soldier->boundingRect().width()/2, event->pos().y() - soldier->boundingRect().height()/2);
            }
        }
    }

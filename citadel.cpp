@@ -11,6 +11,7 @@ Citadel::Citadel(QPoint pos, string team, QGraphicsItem *parent): CustomSprite(t
         setPixmap(QPixmap(":/images/blueCitadel.png"));
     setPos(pos);
     healthPoints = 100;
+    placed = true;
     game->scene->addItem(hpText);
     updateUI();
 }

@@ -18,10 +18,10 @@ public:
     bool isInOurTeam(string team);
 
     QGraphicsTextItem* hpText;
+    string team;
+    bool placed = false;
 
 protected:
-    bool placed = false;
-    string team;
     int healthPoints;
 };
 

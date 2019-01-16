@@ -20,6 +20,9 @@ public:
     void mouseMoveEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
     Wallet* getMyWallet(string team);
+    QList<MineSpot*> getOpenMineSpots();
+    void addMineSpot(MineSpot* mineSpot);
+    void removeMineSpot(MineSpot* mineSpot);
 
     QGraphicsScene* scene;
     CustomSprite* sprite;
@@ -34,6 +37,7 @@ private:
     void spawnGoldMineSpots();
     Wallet* redWallet;
     Wallet* blueWallet;
+    QList<MineSpot*> mineSpots;
 
 };
 

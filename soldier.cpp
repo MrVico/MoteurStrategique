@@ -13,22 +13,24 @@ extern Game* game;
 
 Soldier::Soldier(string team, QGraphicsItem *parent): QObject(), CustomSprite(team, parent){
     // Set the graphic
-    setPixmap(QPixmap(":/images/redSoldierLow.png"));
+    if(this->team == "red")
+        setPixmap(QPixmap(":/images/redSoldierLow.png"));
+    else
+        setPixmap(QPixmap(":/images/blueSoldier.png"));
     viewRange = 200;
     speed = 2;
     reloadTime = 100;
 }
 
-// Start mining
 void Soldier::start()
 {
     placed = true;
     game->scene->addItem(hpText);
     updateUI();
     time = reloadTime;
-    QBasicTimer* timer = new QBasicTimer();
+    timer = new QBasicTimer();
     timer->start(10, this);
-    this->stop();
+    destination = this->pos();
 }
 
 bool Soldier::canBePlaced()
@@ -49,15 +51,17 @@ bool Soldier::canBePlaced()
 
 void Soldier::destroyed()
 {
-
+    timer->stop();
+    game->scene->removeItem(hpText);
+    game->scene->removeItem(this);
 }
 
-void Soldier::moveTo(int x, int y) {
-    destination = QPoint(x,y);
+void Soldier::setDestination(QPointF pos) {
+    setDestination(pos.x(), pos.y());
 }
 
-void Soldier::stop() {
-    destination = QPoint((int)this->pos().x(),(int)this->pos().y());
+void Soldier::setDestination(int x, int y) {
+    destination = QPoint(x ,y);
 }
 
 CustomSprite* Soldier::checkFOV()
@@ -65,7 +69,7 @@ CustomSprite* Soldier::checkFOV()
     foreach (QGraphicsItem* item, game->scene->items()) {
         if(typeid(*(item)) == typeid(Mine) || typeid(*(item)) == typeid(Soldier) || typeid(*(item)) == typeid(Citadel)) {
             CustomSprite* sprite = dynamic_cast<CustomSprite*>(item);
-            if(!sprite->isInOurTeam(this->team) && QVector2D(sprite->pos().x()-this->pos().x(), sprite->pos().y()-this->pos().y()).length() < viewRange){
+            if(sprite->placed && !sprite->isInOurTeam(this->team) && QVector2D(sprite->pos().x()-this->pos().x(), sprite->pos().y()-this->pos().y()).length() < viewRange){
                 return sprite;
             }
         }
@@ -73,7 +77,7 @@ CustomSprite* Soldier::checkFOV()
     return nullptr;
 }
 
-bool Soldier::isCollidingWithSoldier()
+bool Soldier::fixCollision()
 {
     QList<QGraphicsItem*> colliders = collidingItems();
     if(colliders.size() > 1){
@@ -95,19 +99,25 @@ bool Soldier::isCollidingWithSoldier()
 void Soldier::timerEvent(QTimerEvent *e)
 {
     time++;
-    CustomSprite* target = checkFOV();
-    // Shoot
-    if(target && time > reloadTime){
-        new Bullet(this->team, QPoint(this->pos().x()+this->boundingRect().width()/2, this->pos().y()+this->boundingRect().height()/2), target);
-        time = 0;
-    }
-    // Move
-    else if(!isCollidingWithSoldier()){
-        QVector2D distToTarget = QVector2D(destination.x()-this->pos().x(), destination.y()-this->pos().y());
-        if (distToTarget.length() > 32) {
-            distToTarget.normalize();
-            this->setPos(this->pos().x() + distToTarget.x()*speed, this->pos().y() + distToTarget.y()*speed);
+    //if(this->team == "red" || (this->team == "blue" && destination != QPoint(0, 0))){
+        CustomSprite* target = checkFOV();
+        // Shoot
+        if(target && time > reloadTime){
+            new Bullet(this->team, QPoint(this->pos().x()+this->boundingRect().width()/2, this->pos().y()+this->boundingRect().height()/2), target);
+            time = 0;
         }
-        updateUI();
+        // Move
+        move();
+    //}
+}
+
+void Soldier::move()
+{
+    fixCollision();
+    QVector2D distToTarget = QVector2D(destination.x()-this->pos().x(), destination.y()-this->pos().y());
+    if ((this->team == "red" && distToTarget.length() > 32) || (this->team == "blue" && distToTarget.length()> 100)) {
+        distToTarget.normalize();
+        this->setPos(this->pos().x() + distToTarget.x()*speed, this->pos().y() + distToTarget.y()*speed);
     }
+    updateUI();
 }

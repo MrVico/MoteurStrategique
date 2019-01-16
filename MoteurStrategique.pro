@@ -39,7 +39,8 @@ HEADERS += \
     node.h \
     map.h \
     astar.h \
-    bullet.h
+    bullet.h \
+    npc.h
 
 SOURCES += \
     main.cpp \
@@ -53,7 +54,8 @@ SOURCES += \
     wallet.cpp \
     minespot.cpp \
     citadel.cpp \
-    bullet.cpp
+    bullet.cpp \
+    npc.cpp
 
 RESOURCES += \
     res.qrc

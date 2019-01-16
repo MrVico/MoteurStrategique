@@ -17,18 +17,20 @@ public:
     void start();
     bool canBePlaced();
     void destroyed();
-    void moveTo(int x, int y);
+    void setDestination(QPointF pos);
+    void setDestination(int x, int y);
 
 protected:
     void timerEvent(QTimerEvent *e) override;
 
 private:
-    void stop();
     CustomSprite* checkFOV();
-    bool isCollidingWithSoldier();
+    bool fixCollision();
+    void move();
 
+    QBasicTimer* timer;
     int viewRange;
-    QPoint destination;
+    QPointF destination;
     int speed;
     int reloadTime;
 

@@ -17,6 +17,7 @@ protected:
     void timerEvent(QTimerEvent *e) override;
 
 private:
+    QBasicTimer* timer;
     string team;
     CustomSprite* target;
     int speed;

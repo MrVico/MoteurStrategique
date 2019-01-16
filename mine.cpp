@@ -25,10 +25,12 @@ Mine::Mine(string team, int price, bool initialMine, QGraphicsItem *parent):QObj
 // Start mining
 void Mine::start()
 {
+    placed = true;
     game->scene->addItem(hpText);
     // We set the position of the mine spot
     if(!this->initialMine){
         setPos(lastMineSpot->pos());
+        game->removeMineSpot(lastMineSpot);
         game->scene->removeItem(lastMineSpot);
     }
 
@@ -60,9 +62,9 @@ bool Mine::canBePlaced()
 
 void Mine::destroyed()
 {
+    game->addMineSpot(new MineSpot(QPoint(this->pos().x(), this->pos().y())));
     game->scene->removeItem(this->hpText);
     game->scene->removeItem(this);
-    new MineSpot(QPoint(this->pos().x(), this->pos().y()));
     timer->stop();
     // How do we delete the object ???
 }
@@ -70,5 +72,5 @@ void Mine::destroyed()
 void Mine::timerEvent(QTimerEvent *e)
 {
     // Mine gold
-    game->getMyWallet(this->team)->add(1);
+    game->getMyWallet(this->team)->add(5);
 }
