@@ -16,20 +16,23 @@ Citadel::Citadel(QPoint pos, string team, QGraphicsItem *parent): CustomSprite(t
     updateUI();
 }
 
+// Unused but inherited
 void Citadel::start()
 {
 
 }
 
+// Unused but inherited
 bool Citadel::canBePlaced()
 {
     return false;
 }
 
+// Called when the citadel's team lost the game
 void Citadel::destroyed()
 {
-    // Victory or not
     game->scene->removeItem(hpText);
+    // Victory or not
     game->displayEndScreen(!(this->team == "red"));
     game->gameOver = true;
 }

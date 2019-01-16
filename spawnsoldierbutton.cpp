@@ -26,17 +26,20 @@ SpawnSoldierButton::SpawnSoldierButton(QGraphicsItem *parent): QObject(), QGraph
     timer->start(100, this);
 }
 
+// Called when the user clicks on the purchase soldier icon
 void SpawnSoldierButton::mousePressEvent(QGraphicsSceneMouseEvent *event){
-    // If we have enough gold
+    // If we have enough gold we purchase a soldier
     if (game->getMyWallet("red")->getGold() >= game->soldierPrice){
+        // Spend the gold
+        game->getMyWallet("red")->spend(game->soldierPrice);
+        // Create and add the soldier to the scene
         game->sprite = new Soldier("red");
         game->sprite->setPos(event->pos().x()+this->pos().x() - game->sprite->boundingRect().width()/2, event->pos().y() - game->sprite->boundingRect().height()/2);
         game->scene->addItem(game->sprite);
-
-        game->getMyWallet("red")->spend(game->soldierPrice);
     }
 }
 
+// Called over and over to rectify the purchasing sprites so the user has a visual feedback on what he can buy
 void SpawnSoldierButton::timerEvent(QTimerEvent *event)
 {
     if(game->getMyWallet("red")->getGold() >= game->soldierPrice)

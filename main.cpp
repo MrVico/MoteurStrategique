@@ -9,8 +9,8 @@
 #include <iostream>
 
 #include "astar.h"
-
 #include "game.h"
+
 #endif
 
 // External variable
@@ -24,22 +24,16 @@ int main(int argc, char *argv[])
     format.setDepthBufferSize(24);
     QSurfaceFormat::setDefaultFormat(format);
 
-    app.setApplicationName("Projet");
+    app.setApplicationName("Nutcracker Empire");
     app.setApplicationVersion("1.0");
 #ifndef QT_NO_OPENGL
-
-    /*
-    MainWidget widget;
-    widget.setFixedWidth(1080);
-    widget.setFixedHeight(720);
-    widget.show();
-    */
 
     game = new Game();
     game->adjustSize();
     game->move(QApplication::desktop()->screen()->rect().center() - game->rect().center());
     game->show();
     game->displayMainMenu();
+
     /*
     // test a*
     map m;

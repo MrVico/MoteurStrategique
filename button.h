@@ -18,6 +18,8 @@ signals:
     void clicked();
 
 private:
+    void changeColor(Qt::GlobalColor color);
+
     QGraphicsTextItem* text;
 };
 

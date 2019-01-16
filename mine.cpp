@@ -40,6 +40,7 @@ void Mine::start()
     timer->start(300, this);
 }
 
+// Returns if a mine can be placed, in other words if there's a mine spot nearby
 bool Mine::canBePlaced()
 {
     QList<QGraphicsItem*> colliders = collidingItems();
@@ -60,18 +61,19 @@ bool Mine::canBePlaced()
     return false;
 }
 
+// Called when the mine got destroyed by the enemy
 void Mine::destroyed()
 {
+    // We replace the mine with a mine spot on which anyone can place a mine
     game->addMineSpot(new MineSpot(QPoint(this->pos().x(), this->pos().y())));
     game->scene->removeItem(this->hpText);
     game->scene->removeItem(this);
     timer->stop();
-    // How do we delete the object ???
 }
 
+// Called over and over to mine gold
 void Mine::timerEvent(QTimerEvent *e)
 {
-    // Mine gold
     if(!game->gameOver)
         game->getMyWallet(this->team)->add(1);
     else

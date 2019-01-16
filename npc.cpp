@@ -14,6 +14,7 @@ NPC::NPC(): QObject()
     pos = QPoint(game->width(), game->height()/2-game->spriteSize);
 }
 
+// Called over and over
 void NPC::timerEvent(QTimerEvent *event)
 {
     if(getSoldiers().length() == 0 && game->getMyWallet(team)->getGold() >= game->soldierPrice){
@@ -29,13 +30,16 @@ void NPC::timerEvent(QTimerEvent *event)
         buildMine();
     }
 
+    // As soon as the NPC has 3 or more soldiers he goes for an attack
     if(getSoldiers().length() >= 3){
         foreach(Soldier* soldier, getSoldiers()){
+            // His soldiers always attack the nearest target from their position
             soldier->setDestination(getNearestTarget()->pos());
         }
     }
 }
 
+// Purchases, creates and adds a mine for the NPC
 void NPC::buildMine()
 {
     game->getMyWallet(team)->spend(game->minePrice*amountOfMines());
@@ -43,22 +47,25 @@ void NPC::buildMine()
     Mine* mine = new Mine(team, game->minePrice*amountOfMines(), true);
     MineSpot* mineSpot = getNearestMineSpot();
     mine->setPos(mineSpot->pos());
+    // We have to remove the minespot that was previously there
     game->removeMineSpot(mineSpot);
     game->scene->removeItem(mineSpot);
     game->scene->addItem(mine);
     mine->start();
 }
 
+// Purchases, creates and adds a soldier for the NPC
 void NPC::spawnSoldier()
 {
+    game->getMyWallet(team)->spend(game->soldierPrice);
+
     Soldier* soldier = new Soldier(team);
     soldier->setPos(game->width()-game->spriteSize*3, game->height()/2-soldier->boundingRect().height()/2 + rand()%10);
     game->scene->addItem(soldier);
     soldier->start();
-
-    game->getMyWallet(team)->spend(game->soldierPrice);
 }
 
+// Returns the nearest free mine spot from the NPC citadel
 MineSpot* NPC::getNearestMineSpot()
 {
     if(game->getOpenMineSpots().length() == 0)
@@ -72,9 +79,11 @@ MineSpot* NPC::getNearestMineSpot()
     return nearest;
 }
 
+// Returns the nearest enemy target from the army's position
 CustomSprite *NPC::getNearestTarget()
 {
     QList<CustomSprite*> possibleTargets;
+    // Get all possible enemy targets
     foreach (QGraphicsItem* item, game->scene->items()) {
         if(typeid(*(item)) == typeid(Mine) || typeid(*(item)) == typeid(Soldier) || typeid(*(item)) == typeid(Citadel)) {
             CustomSprite* sprite = dynamic_cast<CustomSprite*>(item);
@@ -84,6 +93,7 @@ CustomSprite *NPC::getNearestTarget()
         }
     }
 
+    // If there's a target (else the game would be over) we get the nearest one
     if(possibleTargets.length() > 0){
         CustomSprite* nearest = possibleTargets[0];
         foreach(CustomSprite* target, possibleTargets){
@@ -97,11 +107,13 @@ CustomSprite *NPC::getNearestTarget()
     return nullptr;
 }
 
+// Returns the distance between two locations
 float NPC::distanceBetween(QPointF a, QPointF b)
 {
     return sqrt(pow((a.x()-b.x()), 2) + pow((a.y()-b.y()), 2));
 }
 
+// Returns the center position of all the soldiers, of the army
 QPointF NPC::computeArmyPosition()
 {
     int counter = 0;
@@ -118,6 +130,7 @@ QPointF NPC::computeArmyPosition()
     return sumOfPositions/counter;
 }
 
+// Returns the amount of mines the NPC has placed
 int NPC::amountOfMines()
 {
     int counter = 0;
@@ -132,12 +145,14 @@ int NPC::amountOfMines()
     return counter;
 }
 
+// Starts the NPC's life
 void NPC::start()
 {
     QBasicTimer* timer = new QBasicTimer();
     timer->start(10, this);
 }
 
+// Returns the amount of soldiers the NPC has placed
 QList<Soldier*> NPC::getSoldiers()
 {
     QList<Soldier*> soldiers;

@@ -34,6 +34,7 @@ Game::Game(QWidget *parent)
     spriteSize = 32;
 }
 
+// Displays the main menu screen
 void Game::displayMainMenu()
 {
     scene->setBackgroundBrush(QBrush(QColor::fromRgb(144, 233, 147)));
@@ -64,6 +65,7 @@ void Game::displayMainMenu()
     scene->addItem(quitButton);
 }
 
+// Displays the actual game screen
 void Game::displayGame()
 {
     // Clear the screen
@@ -73,7 +75,7 @@ void Game::displayGame()
 
     scene->setBackgroundBrush(QBrush(QColor::fromRgb(144, 233, 147)));
 
-    // Gradient spawnRegions
+    // Adds the spawn regions for each side with a gradient
     QGraphicsRectItem* spawnRegionsRedSide = new QGraphicsRectItem();
     spawnRegionsRedSide->setRect(0, 0, 190, this->height());
     spawnRegionsRedSide->setPen(Qt::NoPen);
@@ -100,6 +102,7 @@ void Game::displayGame()
     dashes << 4 << 12 ;
     pen.setDashPattern(dashes);
 
+    // Adds the visual marker of the boundary for the two spawn regions
     QGraphicsRectItem* lineRedSide = new QGraphicsRectItem();
     lineRedSide->setPen(pen);
     lineRedSide->setRect(190, 0, 0, this->height());
@@ -110,36 +113,35 @@ void Game::displayGame()
     lineBlueSide->setRect(this->width()-190, 0, 0, this->height());
     scene->addItem(lineBlueSide);
 
-    // Spawn mine spots
+    // Spawns mine spots
     spawnGoldMineSpots();
 
-    // Mine icon
+    // Adds the purchase mine icon
     BuildMineIcon* mineIcon = new BuildMineIcon();
 
-    // Soldier icon
+    // Adds the purchase soldier icon
     SpawnSoldierButton* soldierIcon = new SpawnSoldierButton();
 
-    // Wallets
+    // Initializes the wallet for each team
     redWallet = new Wallet("red");
     scene->addItem(redWallet);
     blueWallet = new Wallet("blue");
     scene->addItem(blueWallet);
 
-    // Spawn the two citadels
+    // Spawns the two citadels
     Citadel* redCitadel = new Citadel(QPoint(5, this->height()/2-spriteSize*2), "red");
     scene->addItem(redCitadel);
     Citadel* blueCitadel = new Citadel(QPoint(this->width()-spriteSize*2-5, this->height()/2-spriteSize*2), "blue");
     scene->addItem(blueCitadel);
 
-    // Computer player
+    // Creates the NPC and gives it life
     NPC* npc = new NPC();
     npc->start();
 }
 
+// Displays the end screen when the game is over
 void Game::displayEndScreen(bool victory)
 {
-    //scene->clear();
-
     QString title;
     if(victory)
         title = QString("Victory");
@@ -162,6 +164,7 @@ void Game::displayEndScreen(bool victory)
     scene->addItem(quitButton);
 }
 
+// Spawns one mine for each team and 8 additional mine spots one the map
 void Game::spawnGoldMineSpots()
 {
     Mine* redMine = new Mine("red", 0, true);
@@ -169,7 +172,6 @@ void Game::spawnGoldMineSpots()
     redMine->updateUI();
     scene->addItem(redMine);
     redMine->start();
-
 
     mineSpots.append(new MineSpot(QPoint(300, 200)));
     mineSpots.append(new MineSpot(QPoint(200, 400)));
@@ -188,6 +190,7 @@ void Game::spawnGoldMineSpots()
     mineSpots.append(new MineSpot(QPoint(this->width()-spriteSize-150, this->height()-spriteSize-600)));
 }
 
+// Returns the wallet of the given team
 Wallet *Game::getMyWallet(string team)
 {
     if(team == "red")
@@ -195,32 +198,39 @@ Wallet *Game::getMyWallet(string team)
     return blueWallet;
 }
 
+// Returns all the available mine spots where a mine can be placed
 QList<MineSpot*> Game::getOpenMineSpots()
 {
     return mineSpots;
 }
 
+// Adds a given mine spot to the list of available mine spots
 void Game::addMineSpot(MineSpot *mineSpot)
 {
     mineSpots.append(mineSpot);
 }
 
+// Removes the given mine spot from the list, a mine was placed
 void Game::removeMineSpot(MineSpot *mineSpot)
 {
     mineSpots.removeAt(mineSpots.indexOf(mineSpot));
 }
 
+// Called when the cursor is moved
 void Game::mouseMoveEvent(QMouseEvent *event)
 {
+    // If we are currently purchasing an item we set its position to the cursor's
     if(sprite){
         sprite->setPos(event->pos().x() - sprite->boundingRect().width()/2, event->pos().y() - sprite->boundingRect().height()/2);
         sprite->canBePlaced();
     }
+    // Else we delegate
     else{
         QGraphicsView::mouseMoveEvent(event);
     }
 }
 
+// Called over and over
 void Game::mousePressEvent(QMouseEvent *event)
 {
     // If we left click with a sprite and the sprite can be placed we do so
@@ -241,6 +251,7 @@ void Game::mousePressEvent(QMouseEvent *event)
         scene->removeItem(sprite);
         sprite = nullptr;
     }
+    // If we aren't currently purchasing an item and right click our army moves
     else if(event->button() == Qt::RightButton){
        foreach (QGraphicsItem* item, scene->items()) {
            if(typeid(*(item)) == typeid(Soldier)) {
@@ -249,7 +260,7 @@ void Game::mousePressEvent(QMouseEvent *event)
                     soldier->setDestination(event->pos().x() - soldier->boundingRect().width()/2, event->pos().y() - soldier->boundingRect().height()/2);
            }
        }
-   }
+    }
     // Else we delegate to the parent
     else{
         QGraphicsView::mousePressEvent(event);

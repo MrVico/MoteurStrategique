@@ -28,22 +28,26 @@ Wallet::Wallet(string side, QGraphicsItem *parent): QGraphicsTextItem(parent)
     updateUI();
 }
 
+// Adds amount to the gold reserve
 void Wallet::add(int amount)
 {
     gold += amount;
     updateUI();
 }
 
+// Takes amount from the gold reserve
 void Wallet::spend(int amount)
 {
     gold -= amount;
     updateUI();
 }
 
+// Returns the amount of gold in reserve
 int Wallet::getGold(){
     return gold;
 }
 
+// Updates the UI gold amount
 void Wallet::updateUI()
 {
     setPlainText(QString::number(gold));

@@ -24,13 +24,10 @@ protected:
 private:
     int amountOfMines();
     QList<Soldier*> getSoldiers();
-
     void buildMine();
     void spawnSoldier();
-
     MineSpot* getNearestMineSpot();
     CustomSprite* getNearestTarget();
-
     float distanceBetween(QPointF a, QPointF b);
     QPointF computeArmyPosition();
 

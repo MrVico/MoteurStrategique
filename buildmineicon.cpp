@@ -26,6 +26,7 @@ BuildMineIcon::BuildMineIcon(QGraphicsItem *parent): QObject(), QGraphicsPixmapI
     timer->start(100, this);
 }
 
+// Called when the user clicks on the purchase mine icon
 void BuildMineIcon::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     //if (!game->sprite){
@@ -38,6 +39,7 @@ void BuildMineIcon::mousePressEvent(QGraphicsSceneMouseEvent *event)
     }
 }
 
+// Called over and over to rectify the purchasing sprites so the user has a visual feedback on what he can buy
 void BuildMineIcon::timerEvent(QTimerEvent *event)
 {
     setMinePrice();
@@ -49,9 +51,10 @@ void BuildMineIcon::timerEvent(QTimerEvent *event)
     text->setPos(this->pos().x()+this->boundingRect().width()/2-text->boundingRect().width()/2, boundingRect().height());
 }
 
-// number of mines placed by the player
+// Returns the current price for purchasing a mine
 void BuildMineIcon::setMinePrice()
 {
+    // We first have to count all the mines we own
     int counter = 0;
     foreach (QGraphicsItem* item, game->scene->items()) {
         if(typeid(*(item)) == typeid(Mine)) {
@@ -61,5 +64,6 @@ void BuildMineIcon::setMinePrice()
             }
         }
     }
+    // We then compute the according price
     price = game->minePrice*counter;
 }

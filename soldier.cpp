@@ -22,6 +22,7 @@ Soldier::Soldier(string team, QGraphicsItem *parent): QObject(), CustomSprite(te
     reloadTime = 100;
 }
 
+// Once the soldier is placed on the map he can start his routine
 void Soldier::start()
 {
     placed = true;
@@ -33,6 +34,7 @@ void Soldier::start()
     destination = this->pos();
 }
 
+// If the soldier isn't far away from our zone and he isn't colliding with an obstacle he can be placed
 bool Soldier::canBePlaced()
 {
     // Can only be spawned near our camp
@@ -49,6 +51,7 @@ bool Soldier::canBePlaced()
     return true;
 }
 
+// Called once the soldier has no more HP
 void Soldier::destroyed()
 {
     timer->stop();
@@ -56,14 +59,17 @@ void Soldier::destroyed()
     game->scene->removeItem(this);
 }
 
+// Tells the soldier where he should move to
 void Soldier::setDestination(QPointF pos) {
     setDestination(pos.x(), pos.y());
 }
 
+// Tells the soldier where he should move to
 void Soldier::setDestination(int x, int y) {
     destination = QPoint(x ,y);
 }
 
+// Checks if an enemy unit (soldier, mine, citadel) is nearby
 CustomSprite* Soldier::checkFOV()
 {
     foreach (QGraphicsItem* item, game->scene->items()) {
@@ -77,16 +83,19 @@ CustomSprite* Soldier::checkFOV()
     return nullptr;
 }
 
+// Prevents the soldiers from overlapping
 void Soldier::fixCollision()
 {
     QList<QGraphicsItem*> colliders = collidingItems();
     if(colliders.size() > 1){
         for(int i=0; i<colliders.size(); i++){
+            // If we collide with another soldier
             if(typeid(*(colliders[i])) == typeid(Soldier)){
                 Soldier* soldier = dynamic_cast<Soldier*>(colliders[i]);
                 if(soldier->placed){
                     QVector2D direction = QVector2D(soldier->pos().x()-this->pos().x(), soldier->pos().y()-this->pos().y());
                     direction.normalize();
+                    // We move in the opposite direction
                     this->setPos(this->pos().x()-direction.x()*speed, this->pos().y()-direction.y()*speed);
                     return;
                 }
@@ -95,24 +104,26 @@ void Soldier::fixCollision()
     }
 }
 
+// Called over and over
 void Soldier::timerEvent(QTimerEvent *e)
 {
+    // On game over we stop living
     if(game->gameOver)
         timer->stop();
     else{
         time++;
 
         CustomSprite* target = checkFOV();
-        // Shoot
+        // Shoot if there's a target in range and we aren't currently reloading
         if(target && time > reloadTime){
             new Bullet(this->team, QPoint(this->pos().x()+this->boundingRect().width()/2, this->pos().y()+this->boundingRect().height()/2), target);
             time = 0;
         }
-        // Move
         move();
     }
 }
 
+// Moves the soldier towards its destination
 void Soldier::move()
 {
     fixCollision();
