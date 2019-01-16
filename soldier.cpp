@@ -33,8 +33,13 @@ void Soldier::start()
 
 bool Soldier::canBePlaced()
 {
+    // Can only be spawned near our camp
+    if(this->pos().x() > 200){
+        setPixmap(QPixmap(":/images/redSoldierLow.png"));
+        return false;
+    }
     QList<QGraphicsItem*> colliders = collidingItems();
-    if(colliders.size()>0){
+    if(colliders.size()>1){
         setPixmap(QPixmap(":/images/redSoldierLow.png"));
         return false;
     }

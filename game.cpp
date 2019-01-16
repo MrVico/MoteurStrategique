@@ -8,8 +8,11 @@
 
 #include <QGraphicsScene>
 #include <QGraphicsTextItem>
+#include <QGraphicsRectItem>
 #include <QDebug>
 #include <QPixmap>
+#include <QLinearGradient>
+#include <QPainter>
 
 Game::Game(QWidget *parent)
 {
@@ -62,6 +65,26 @@ void Game::displayGame()
 {
     // Clear the screen
     scene->clear();
+
+    QGraphicsRectItem* spawnRegionsRedSide = new QGraphicsRectItem();
+    spawnRegionsRedSide->setRect(0, 0, 200, this->height());
+    spawnRegionsRedSide->setPen(Qt::NoPen);
+    QLinearGradient gradient1(0, 0, 200, 0);
+    gradient1.setColorAt(0, QColor::fromRgb(27, 241, 34));
+    gradient1.setColorAt(1, QColor::fromRgb(144, 233, 147));
+    spawnRegionsRedSide->setBrush(QBrush(gradient1));
+    scene->addItem(spawnRegionsRedSide);
+
+    scene->setBackgroundBrush(QBrush(QColor::fromRgb(144, 233, 147)));
+
+    QGraphicsRectItem* spawnRegionsBlueSide = new QGraphicsRectItem();
+    spawnRegionsBlueSide->setRect(this->width()-200, 0, this->width(), this->height());
+    spawnRegionsBlueSide->setPen(Qt::NoPen);
+    QLinearGradient gradient2(this->width(), 0, this->width()-200, 0);
+    gradient2.setColorAt(0, QColor::fromRgb(27, 241, 34));
+    gradient2.setColorAt(1, QColor::fromRgb(144, 233, 147));
+    spawnRegionsBlueSide->setBrush(QBrush(gradient2));
+    scene->addItem(spawnRegionsBlueSide);
 
     // Spawn mine spots
     spawnGoldMineSpots();
