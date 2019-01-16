@@ -12,13 +12,14 @@ SpawnSoldierButton::SpawnSoldierButton(QGraphicsItem *parent): QObject(), QGraph
     setPixmap(QPixmap(":/images/soldierIcon.png"));
     offset = 10;
     setPos(game->spriteSize*3+offset, 5);
+    game->scene->addItem(this);
 
     // Draw the price text
     text = new QGraphicsTextItem();
     text->setPlainText(QString::number(game->soldierPrice));
     text->setDefaultTextColor(Qt::red);
     text->setFont(QFont("times", 10));
-    text->setPos(game->spriteSize*3 + offset + 5, boundingRect().height());
+    text->setPos(this->pos().x()+this->boundingRect().width()/2-text->boundingRect().width()/2, boundingRect().height());
     game->scene->addItem(text);
 
     QBasicTimer* timer = new QBasicTimer();
@@ -29,7 +30,7 @@ void SpawnSoldierButton::mousePressEvent(QGraphicsSceneMouseEvent *event){
     // If we have enough gold
     if (game->getMyWallet("red")->getGold() >= game->soldierPrice){
         game->sprite = new Soldier("red");
-        game->sprite->setPos(event->pos().x()+game->spriteSize*3+offset - game->sprite->boundingRect().width()/2, event->pos().y() - game->sprite->boundingRect().height()/2);
+        game->sprite->setPos(event->pos().x()+this->pos().x() - game->sprite->boundingRect().width()/2, event->pos().y() - game->sprite->boundingRect().height()/2);
         game->scene->addItem(game->sprite);
 
         game->getMyWallet("red")->spend(game->soldierPrice);

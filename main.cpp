@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
     QSurfaceFormat::setDefaultFormat(format);
 
     app.setApplicationName("Projet");
-    app.setApplicationVersion("0.1");
+    app.setApplicationVersion("1.0");
 #ifndef QT_NO_OPENGL
 
     /*

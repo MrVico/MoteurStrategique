@@ -63,22 +63,20 @@ void Game::displayGame()
     // Clear the screen
     scene->clear();
 
+    // Spawn mine spots
+    spawnGoldMineSpots();
+
     // Mine icon
     BuildMineIcon* mineIcon = new BuildMineIcon();
-    scene->addItem(mineIcon);
 
     // Soldier icon
     SpawnSoldierButton* soldierIcon = new SpawnSoldierButton();
-    scene->addItem(soldierIcon);
 
     // Wallets
     redWallet = new Wallet("red");
     scene->addItem(redWallet);
     blueWallet = new Wallet("blue");
     scene->addItem(blueWallet);
-
-    // Spawn mine spots
-    spawnGoldMineSpots();
 
     // Spawn the two citadels
     Citadel* redCitadel = new Citadel(QPoint(5, this->height()/2-spriteSize*2), "red");
@@ -89,7 +87,7 @@ void Game::displayGame()
 
 void Game::spawnGoldMineSpots()
 {
-    Mine* redMine = new Mine("red", true);
+    Mine* redMine = new Mine("red", 0, true);
     redMine->setPos(QPoint(200, 100));
     redMine->updateUI();
     scene->addItem(redMine);
@@ -101,7 +99,7 @@ void Game::spawnGoldMineSpots()
     new MineSpot(QPoint(400, 480));
     new MineSpot(QPoint(150, 600));
 
-    Mine* blueMine = new Mine("blue", true);
+    Mine* blueMine = new Mine("blue", 0, true);
     blueMine->setPos(QPoint(this->width()-spriteSize-200, this->height()-spriteSize-100));
     blueMine->updateUI();
     scene->addItem(blueMine);
@@ -141,8 +139,13 @@ void Game::mousePressEvent(QMouseEvent *event)
     // If we right click with a sprite we remove it, cancel
     else if(event->button() == Qt::RightButton && sprite){
         // We get our money back since we didn't place the item
-        if(typeid(*(sprite)) == typeid(Soldier))
+        if(typeid(*(sprite)) == typeid(Soldier)){
             redWallet->add(soldierPrice);
+        }
+        else if(typeid(*(sprite)) == typeid(Mine)){
+            Mine* mine = dynamic_cast<Mine*>(sprite);
+            redWallet->add(mine->price);
+        }
         scene->removeItem(sprite);
         sprite = nullptr;
     }

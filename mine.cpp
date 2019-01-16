@@ -10,7 +10,7 @@
 
 extern Game* game;
 
-Mine::Mine(string team, bool initialMine, QGraphicsItem *parent):QObject(), CustomSprite(team, parent){
+Mine::Mine(string team, int price, bool initialMine, QGraphicsItem *parent):QObject(), CustomSprite(team, parent){
     if(this->team == "red")
         if(initialMine)
             setPixmap(QPixmap(":/images/redMine.png"));
@@ -18,6 +18,7 @@ Mine::Mine(string team, bool initialMine, QGraphicsItem *parent):QObject(), Cust
             setPixmap(QPixmap(":/images/redMineLow.png"));
     else
         setPixmap(QPixmap(":/images/blueMine.png"));
+    this->price = price;
     this->initialMine = initialMine;
 }
 
@@ -34,7 +35,7 @@ void Mine::start()
     updateUI();
 
     timer = new QBasicTimer();
-    timer->start(1000, this);
+    timer->start(100, this);
 }
 
 bool Mine::canBePlaced()

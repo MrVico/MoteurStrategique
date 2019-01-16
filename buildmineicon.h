@@ -16,6 +16,12 @@ public:
 
 protected:
     void timerEvent(QTimerEvent *event) override;
+
+private:
+    void setMinePrice();
+
+    QGraphicsTextItem* text;
+    int price;
 };
 
 #endif // BUILDMINEICON_H

@@ -24,6 +24,7 @@ public:
     QGraphicsScene* scene;
     CustomSprite* sprite;
     int soldierPrice = 50;
+    int minePrice = 50;
     int spriteSize;
 
 public slots:
