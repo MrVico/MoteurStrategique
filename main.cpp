@@ -34,25 +34,6 @@ int main(int argc, char *argv[])
     game->show();
     game->displayMainMenu();
 
-    /*
-    // test a*
-    map m;
-    point s;
-    point e(7, 7);
-    astar a;
-
-    std::list<point> path;
-    a.search(s, e, m);
-    int c = a.path(path);
-
-    std::cout << "path cost " << c << std::endl;
-
-    for( std::list<point>::iterator i = path.begin(); i != path.end(); i++ ) {
-        std::cout << "(" << ( *i ).x << ", " << ( *i ).y << ") ";
-    }
-
-    std::cout << std::endl;
-    */
 #else
     QLabel note("OpenGL Support required");
     note.show();

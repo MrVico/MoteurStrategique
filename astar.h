@@ -1,117 +1,36 @@
 #ifndef ASTAR_H
 #define ASTAR_H
 
-#include <iostream>
-#include <list>
-#include <algorithm>
-
 #include "node.h"
 #include "map.h"
 
-class astar
-{
+#include <algorithm>
+#include <list>
+
+class AStar {
 public:
-    map m;
+    Map map;
 
-    point end;
-    point start;
-    point neighbours[8];
+    Point end;
+    Point start;
+    Point neighbours[8];
 
-    std::list<node> open;
-    std::list<node> closed;
+    std::list<Node> open;
+    std::list<Node> closed;
 
-    astar() {
-        neighbours[0] = point( -1, -1 ); neighbours[1] = point(  1, -1 );
-        neighbours[2] = point( -1,  1 ); neighbours[3] = point(  1,  1 );
-        neighbours[4] = point(  0, -1 ); neighbours[5] = point( -1,  0 );
-        neighbours[6] = point(  0,  1 ); neighbours[7] = point(  1,  0 );
-    }
+    AStar();
 
-    int calcDist( point& p ){
-        std::cout << "calcDist" << std::endl;
-        // heuristique
-        int x = end.x - p.x, y = end.y - p.y;
-        return( x * x + y * y );
-    }
+    int calcDist(Point& p);
 
-    bool isValid( point& p ) {
-        std::cout << "isValid" << std::endl;
-        return ( p.x >-1 && p.y > -1 && p.x < m.w && p.y < m.h );
-    }
+    bool isValid(Point& p);
 
-    bool existPoint( point& p, int cost ) {
-        std::cout << "existPoint" << std::endl;
-        std::list<node>::iterator i;
-        i = std::find( closed.begin(), closed.end(), p );
-        if( i != closed.end() ) {
-            if( ( *i ).cost + ( *i ).dist < cost ) return true;
-            else { closed.erase( i ); return false; }
-        }
-        i = std::find( open.begin(), open.end(), p );
-        if( i != open.end() ) {
-            if( ( *i ).cost + ( *i ).dist < cost ) return true;
-            else { open.erase( i ); return false; }
-        }
-        return false;
-    }
+    bool existPoint(Point& p, int cost);
 
-    bool fillOpen( node& n ) {
-        std::cout << "fillOpen" << std::endl;
-        int stepCost, nc, dist;
-        point neighbour;
+    bool fillOpen(Node& n);
 
-        for( int x = 0; x < 8; x++ ) {
-            // one can make diagonals have different cost
-            stepCost = x < 4 ? 1 : 1;
-            neighbour = n.pos + neighbours[x];
-            if( neighbour == end ) return true;
+    bool search(Point& s, Point& e, Map& m);
 
-            if( isValid( neighbour ) && m( neighbour.x, neighbour.y ) != 1 ) {
-                nc = stepCost + n.cost;
-                dist = calcDist( neighbour );
-                if( !existPoint( neighbour, nc + dist ) ) {
-                    node m;
-                    m.cost = nc; m.dist = dist;
-                    m.pos = neighbour;
-                    m.parent = n.pos;
-                    open.push_back( m );
-                }
-            }
-        }
-        return false;
-    }
-
-    bool search( point& s, point& e, map& mp ) {
-        std::cout << "Search" << std::endl;
-        node n; end = e; start = s; m = mp;
-        n.cost = 0; n.pos = s; n.parent = 0; n.dist = calcDist( s );
-        open.push_back( n );
-        while( !open.empty() ) {
-            //open.sort();
-            node n = open.front();
-            open.pop_front();
-            closed.push_back( n );
-            if( fillOpen( n ) ) return true;
-        }
-        return false;
-    }
-
-    int path( std::list<point>& path ) {
-        std::cout << "path" << std::endl;
-        path.push_front( end );
-        int cost = 1 + closed.back().cost;
-        path.push_front( closed.back().pos );
-        point parent = closed.back().parent;
-
-        for( std::list<node>::reverse_iterator i = closed.rbegin(); i != closed.rend(); i++ ) {
-            if( ( *i ).pos == parent && !( ( *i ).pos == start ) ) {
-                path.push_front( ( *i ).pos );
-                parent = ( *i ).parent;
-            }
-        }
-        path.push_front( start );
-        return cost;
-    }
+    int path(std::list<Point>& path);
 };
 
 #endif // ASTAR_H

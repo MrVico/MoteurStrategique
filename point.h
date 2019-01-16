@@ -2,16 +2,16 @@
 #define POINT_H
 
 
-class point
+class Point
 {
 public:
     int x;
     int y;
 
-    point( int a = 0, int b = 0 ) { x = a; y = b; }
+    Point(int a = 0, int b = 0);
 
-    bool operator ==( const point& o ) { return o.x == x && o.y == y; }
-    point operator +( const point& o ) { return point( o.x + x, o.y + y ); }
+    bool operator==(const Point& p);
+    Point operator+(const Point& p);
 };
 
 #endif // POINT_H

@@ -55,7 +55,11 @@ SOURCES += \
     minespot.cpp \
     citadel.cpp \
     bullet.cpp \
-    npc.cpp
+    npc.cpp \
+    astar.cpp \
+    map.cpp \
+    node.cpp \
+    point.cpp
 
 RESOURCES += \
     res.qrc

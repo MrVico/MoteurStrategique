@@ -3,18 +3,17 @@
 
 #include "point.h"
 
-class node
-{
+class Node {
 public:
     int dist;
     int cost;
 
-    point pos;
-    point parent;
+    Point pos;
+    Point parent;
 
-    bool operator == (const node& o ) { return pos == o.pos; }
-    bool operator == (const point& o ) { return pos == o; }
-    bool operator < (const node& o ) { return dist + cost < o.dist + o.cost; }
+    bool operator==(const Node& n);
+    bool operator==(const Point& p);
+    bool operator<(const Node& n);
 };
 
 #endif // NODE_H
