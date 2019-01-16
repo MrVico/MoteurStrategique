@@ -66,25 +66,44 @@ void Game::displayGame()
     // Clear the screen
     scene->clear();
 
+    scene->setBackgroundBrush(QBrush(QColor::fromRgb(144, 233, 147)));
+
+    // Gradient spawnRegions
     QGraphicsRectItem* spawnRegionsRedSide = new QGraphicsRectItem();
-    spawnRegionsRedSide->setRect(0, 0, 200, this->height());
+    spawnRegionsRedSide->setRect(0, 0, 190, this->height());
     spawnRegionsRedSide->setPen(Qt::NoPen);
-    QLinearGradient gradient1(0, 0, 200, 0);
+    QLinearGradient gradient1(0, 0, 190, 0);
     gradient1.setColorAt(0, QColor::fromRgb(27, 241, 34));
     gradient1.setColorAt(1, QColor::fromRgb(144, 233, 147));
     spawnRegionsRedSide->setBrush(QBrush(gradient1));
     scene->addItem(spawnRegionsRedSide);
 
-    scene->setBackgroundBrush(QBrush(QColor::fromRgb(144, 233, 147)));
-
     QGraphicsRectItem* spawnRegionsBlueSide = new QGraphicsRectItem();
-    spawnRegionsBlueSide->setRect(this->width()-200, 0, this->width(), this->height());
+    spawnRegionsBlueSide->setRect(this->width()-190, 0, this->width(), this->height());
     spawnRegionsBlueSide->setPen(Qt::NoPen);
-    QLinearGradient gradient2(this->width(), 0, this->width()-200, 0);
+    QLinearGradient gradient2(this->width(), 0, this->width()-190, 0);
     gradient2.setColorAt(0, QColor::fromRgb(27, 241, 34));
     gradient2.setColorAt(1, QColor::fromRgb(144, 233, 147));
     spawnRegionsBlueSide->setBrush(QBrush(gradient2));
     scene->addItem(spawnRegionsBlueSide);
+
+    // Dotted lines
+    QPen pen(Qt::PenStyle::DashDotLine);
+    pen.setWidth(2);
+    pen.setColor(QColor(0, 0, 0, 80));
+    QVector<qreal> dashes;
+    dashes << 4 << 12 ;
+    pen.setDashPattern(dashes);
+
+    QGraphicsRectItem* lineRedSide = new QGraphicsRectItem();
+    lineRedSide->setPen(pen);
+    lineRedSide->setRect(190, 0, 0, this->height());
+    scene->addItem(lineRedSide);
+
+    QGraphicsRectItem* lineBlueSide = new QGraphicsRectItem();
+    lineBlueSide->setPen(pen);
+    lineBlueSide->setRect(this->width()-190, 0, 0, this->height());
+    scene->addItem(lineBlueSide);
 
     // Spawn mine spots
     spawnGoldMineSpots();

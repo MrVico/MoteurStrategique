@@ -34,7 +34,7 @@ void Soldier::start()
 bool Soldier::canBePlaced()
 {
     // Can only be spawned near our camp
-    if(this->pos().x() > 200){
+    if(this->pos().x() > 190){
         setPixmap(QPixmap(":/images/redSoldierLow.png"));
         return false;
     }
