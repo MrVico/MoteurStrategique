@@ -36,8 +36,10 @@ Game::Game(QWidget *parent)
 
 void Game::displayMainMenu()
 {
+    scene->setBackgroundBrush(QBrush(QColor::fromRgb(144, 233, 147)));
+
     // Title
-    QGraphicsTextItem* titleText = new QGraphicsTextItem(QString("Moteur Strategique"));
+    QGraphicsTextItem* titleText = new QGraphicsTextItem(QString("Nutcracker Empire"));
     QFont titleFont("comis sans", 50);
     titleText->setFont(titleFont);
     int xTxtPos = this->width()/2 - titleText->boundingRect().width()/2;
@@ -66,6 +68,8 @@ void Game::displayGame()
 {
     // Clear the screen
     scene->clear();
+
+    gameOver = false;
 
     scene->setBackgroundBrush(QBrush(QColor::fromRgb(144, 233, 147)));
 
@@ -130,6 +134,32 @@ void Game::displayGame()
     // Computer player
     NPC* npc = new NPC();
     npc->start();
+}
+
+void Game::displayEndScreen(bool victory)
+{
+    //scene->clear();
+
+    QString title;
+    if(victory)
+        title = QString("Victory");
+    else
+        title = QString("Defeat");
+    QGraphicsTextItem* titleText = new QGraphicsTextItem(title);
+    QFont titleFont("comis sans", 50);
+    titleText->setFont(titleFont);
+    int xTxtPos = this->width()/2 - titleText->boundingRect().width()/2;
+    int yTxtPos = 250;
+    titleText->setPos(xTxtPos, yTxtPos);
+    scene->addItem(titleText);
+
+    // Quit button
+    Button* quitButton = new Button(QString("Quit"));
+    int xButtonPos = this->width()/2 - quitButton->boundingRect().width()/2;
+    int yButtonPos = 350;
+    quitButton->setPos(xButtonPos, yButtonPos);
+    QObject::connect(quitButton, SIGNAL(clicked()), this, SLOT(close()));
+    scene->addItem(quitButton);
 }
 
 void Game::spawnGoldMineSpots()

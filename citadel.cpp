@@ -10,7 +10,7 @@ Citadel::Citadel(QPoint pos, string team, QGraphicsItem *parent): CustomSprite(t
     else
         setPixmap(QPixmap(":/images/blueCitadel.png"));
     setPos(pos);
-    healthPoints = 100;
+    healthPoints = 50;
     placed = true;
     game->scene->addItem(hpText);
     updateUI();
@@ -28,5 +28,8 @@ bool Citadel::canBePlaced()
 
 void Citadel::destroyed()
 {
-
+    // Victory or not
+    game->scene->removeItem(hpText);
+    game->displayEndScreen(!(this->team == "red"));
+    game->gameOver = true;
 }

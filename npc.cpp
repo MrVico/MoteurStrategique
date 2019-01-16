@@ -52,7 +52,7 @@ void NPC::buildMine()
 void NPC::spawnSoldier()
 {
     Soldier* soldier = new Soldier(team);
-    soldier->setPos(game->width()-game->spriteSize*3, game->height()/2-soldier->boundingRect().height()/2);
+    soldier->setPos(game->width()-game->spriteSize*3, game->height()/2-soldier->boundingRect().height()/2 + rand()%10);
     game->scene->addItem(soldier);
     soldier->start();
 

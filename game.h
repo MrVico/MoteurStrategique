@@ -23,12 +23,14 @@ public:
     QList<MineSpot*> getOpenMineSpots();
     void addMineSpot(MineSpot* mineSpot);
     void removeMineSpot(MineSpot* mineSpot);
+    void displayEndScreen(bool victory);
 
     QGraphicsScene* scene;
     CustomSprite* sprite;
     int soldierPrice = 50;
     int minePrice = 50;
     int spriteSize;
+    bool gameOver;
 
 public slots:
     void displayGame();

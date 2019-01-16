@@ -37,7 +37,7 @@ void Mine::start()
     updateUI();
 
     timer = new QBasicTimer();
-    timer->start(100, this);
+    timer->start(300, this);
 }
 
 bool Mine::canBePlaced()
@@ -72,5 +72,8 @@ void Mine::destroyed()
 void Mine::timerEvent(QTimerEvent *e)
 {
     // Mine gold
-    game->getMyWallet(this->team)->add(5);
+    if(!game->gameOver)
+        game->getMyWallet(this->team)->add(1);
+    else
+        timer->stop();
 }

@@ -19,13 +19,13 @@ public:
     void destroyed();
     void setDestination(QPointF pos);
     void setDestination(int x, int y);
+    void fixCollision();
 
 protected:
     void timerEvent(QTimerEvent *e) override;
 
 private:
     CustomSprite* checkFOV();
-    bool fixCollision();
     void move();
 
     QBasicTimer* timer;

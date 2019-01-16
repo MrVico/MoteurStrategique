@@ -77,7 +77,7 @@ CustomSprite* Soldier::checkFOV()
     return nullptr;
 }
 
-bool Soldier::fixCollision()
+void Soldier::fixCollision()
 {
     QList<QGraphicsItem*> colliders = collidingItems();
     if(colliders.size() > 1){
@@ -88,18 +88,20 @@ bool Soldier::fixCollision()
                     QVector2D direction = QVector2D(soldier->pos().x()-this->pos().x(), soldier->pos().y()-this->pos().y());
                     direction.normalize();
                     this->setPos(this->pos().x()-direction.x()*speed, this->pos().y()-direction.y()*speed);
-                    return true;
+                    return;
                 }
             }
         }
     }
-    return false;
 }
 
 void Soldier::timerEvent(QTimerEvent *e)
 {
-    time++;
-    //if(this->team == "red" || (this->team == "blue" && destination != QPoint(0, 0))){
+    if(game->gameOver)
+        timer->stop();
+    else{
+        time++;
+
         CustomSprite* target = checkFOV();
         // Shoot
         if(target && time > reloadTime){
@@ -108,7 +110,7 @@ void Soldier::timerEvent(QTimerEvent *e)
         }
         // Move
         move();
-    //}
+    }
 }
 
 void Soldier::move()
